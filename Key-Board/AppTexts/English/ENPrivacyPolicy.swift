@@ -17,7 +17,7 @@ func setENPrivacyPolicy(fontSize: CGFloat) -> NSMutableAttributedString {
   let wikidataDataLicensing: String = "https://www.wikidata.org/wiki/Wikidata:Licensing"
   let wikipediaDataLicensing: String = "https://en.wikipedia.org/wiki/Wikipedia:Reusing_Wikipedia_content"
   let huggingFaceLicensing: String = "https://github.com/huggingface/transformers/blob/master/LICENSE"
-  let scribeGitHub: String = "https://github.com/scribe-org"
+  let scribeGitHub: String = "https://github.com/glintonliao"
   let scribeEmail: String = "scribe.langauge@gmail.com"
   let gitHubLogoLicensing: String = "https://github.com/logos"
   let wikidataLogoLicensing: String = "https://foundation.wikimedia.org/wiki/Policy:Trademark_policy"
