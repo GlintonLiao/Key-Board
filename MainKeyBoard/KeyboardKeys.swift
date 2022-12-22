@@ -54,10 +54,7 @@ class KeyboardKey: UIButton {
 
     if self.key != "ß"
         && self.key != "´"
-        && self.key != spaceBar
-        && self.key != languageTextForSpaceBar
-        && self.key != "ABC"
-        && self.key != "АБВ" {
+        && self.key != spaceBar {
       capsKey = keyboard[self.row][self.idx].capitalized
     } else {
       capsKey = self.key
@@ -68,16 +65,6 @@ class KeyboardKey: UIButton {
     self.layer.setValue(keyToDisplay, forKey: "keyToDisplay")
     self.layer.setValue(false, forKey: "isSpecial")
     self.setTitle(keyToDisplay, for: .normal) // set button character
-
-    if showKeyboardLanguage && self.key == languageTextForSpaceBar {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-        self.layer.setValue(spaceBar, forKey: "original")
-        self.layer.setValue(spaceBar, forKey: "keyToDisplay")
-        self.setTitle(spaceBar, for: .normal)
-
-        showKeyboardLanguage = false
-      }
-    }
   }
 
   /// Sets the character size of a capital key if the device is an iPhone given the orientation.
@@ -88,7 +75,7 @@ class KeyboardKey: UIButton {
           || self.key == "АБВ"
           || self.key == "123" {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 3.5)
-      } else if self.key == spaceBar || self.key == languageTextForSpaceBar {
+      } else if self.key == spaceBar {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 4)
       } else {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.9)
@@ -96,10 +83,10 @@ class KeyboardKey: UIButton {
     } else {
       if self.key == "#+=" {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.75)
-      } else if self.key == spaceBar || self.key == languageTextForSpaceBar {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2)
+      } else if self.key == spaceBar {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
       } else {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.5)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
     }
   }
@@ -117,7 +104,7 @@ class KeyboardKey: UIButton {
       if isLandscapeView == true {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.4)
       } else {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.35)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
     } else {
       self.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
@@ -143,25 +130,13 @@ class KeyboardKey: UIButton {
     } else if self.key == "delete"
       || self.key == "shift"
       || self.key == "selectKeyboard" {
-      // Cancel Russian keyboard key resizing if translating as the keyboard is English.
-      if controllerLanguage == "Russian"
-        && keyboardState == .letters
-        && commandState != .translate {
-        self.layer.setValue(true, forKey: "isSpecial")
-        self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 1).isActive = true
-      } else {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 2 + numSymKeyWidth / 0.875 * 0.125).isActive = true
-      }
     } else if self.key == ".?123"
       || self.key == "return"
       || self.key == "hideKeyboard" {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 2 + numSymKeyWidth / 0.875 * 0.125).isActive = true
-    } else if (keyboardState == .numbers || keyboardState == .symbols)
-      && self.row == 2 {
-      // Make second row number and symbol keys wider for iPhones.
-      self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 1.4).isActive = true
     } else if self.key == "space" {
       self.widthAnchor.constraint(equalToConstant: keyWidth * 4 + keyWidth / 0.875 * 0.125 * 3).isActive = true
     } else {
@@ -186,7 +161,7 @@ class KeyboardKey: UIButton {
       } else {
         self.backgroundColor = specialKeyColor
       }
-    } else if self.key == "return" && [.translate, .conjugate, .plural].contains(commandState) {
+    } else if self.key == "return" {
       // Color the return key depending on if it's being used as enter for commands.
       self.backgroundColor = commandKeyColor
     } else if isSpecial == true {

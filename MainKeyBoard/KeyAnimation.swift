@@ -23,13 +23,7 @@ func setPopPathState(
 ) {
   // Starting positions need to be updated.
   horizStart = startX; vertStart = startY + keyHeight
-  if DeviceType.isPad {
-    widthMultiplier = 0.2
-    maxHeightMultiplier = 2.05
-    if isLandscapeView == true {
-      maxHeightMultiplier = 1.95
-    }
-  } else if DeviceType.isPhone && isLandscapeView == true {
+  if DeviceType.isPhone && isLandscapeView == true {
     widthMultiplier = 0.2
     maxHeightMultiplier = 2.125
   } else if DeviceType.isPhone && [".", ",", "?", "!", "'"].contains(char) {
@@ -49,7 +43,7 @@ func setPopPathState(
 
   if DeviceType.isPhone {
     heightBeforeTopCurves = vertStart - ( keyHeight * 1.8 )
-  } else if DeviceType.isPad || ( DeviceType.isPhone && isLandscapeView == true ) {
+  } else if DeviceType.isPhone && isLandscapeView == true {
     heightBeforeTopCurves = vertStart - ( keyHeight * 1.6 )
   }
 }
@@ -263,9 +257,6 @@ func getKeyPopPath(key: UIButton, layer: CAShapeLayer, char: String, displayChar
   if displayChar == char && DeviceType.isPhone && isLandscapeView == false
       && !["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(char) {
     labelVertPosition = frame.origin.y - key.frame.height / 1.6
-  } else if DeviceType.isPad
-      && isLandscapeView == true {
-    labelVertPosition = frame.origin.y - key.frame.height / 2
   }
 
   if centralKeyChars.contains(char) {
@@ -280,7 +271,7 @@ func getKeyPopPath(key: UIButton, layer: CAShapeLayer, char: String, displayChar
       keyWidth: key.frame.width, keyHeight: key.frame.height, char: char).cgPath
     keyPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.85, y: labelVertPosition)
     keyHoldPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.85, y: labelVertPosition)
-    if DeviceType.isPad || ( DeviceType.isPhone && isLandscapeView == true ) {
+    if DeviceType.isPhone && isLandscapeView == true {
       keyPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.65, y: labelVertPosition)
       keyHoldPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.65, y: labelVertPosition)
     }
@@ -290,7 +281,7 @@ func getKeyPopPath(key: UIButton, layer: CAShapeLayer, char: String, displayChar
       keyWidth: key.frame.width, keyHeight: key.frame.height, char: char).cgPath
     keyPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.15, y: labelVertPosition)
     keyHoldPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.15, y: labelVertPosition)
-    if DeviceType.isPad || ( DeviceType.isPhone && isLandscapeView == true ) {
+    if DeviceType.isPhone && isLandscapeView == true {
       keyPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.35, y: labelVertPosition)
       keyHoldPopChar.center = CGPoint(x: frame.origin.x + key.frame.width * 0.35, y: labelVertPosition)
     }
@@ -370,11 +361,7 @@ func setPadKeyPopCharSize(char: String) {
 /// - Parameters
 ///   - char: the character of the key.
 func setKeyPopCharSize(char: String) {
-  if DeviceType.isPhone {
-    setPhoneKeyPopCharSize(char: char)
-  } else if DeviceType.isPad {
-    setPadKeyPopCharSize(char: char)
-  }
+  setPhoneKeyPopCharSize(char: char)
 }
 
 /// Creates and styles the pop up animation of a key.

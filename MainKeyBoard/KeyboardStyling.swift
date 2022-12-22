@@ -73,42 +73,6 @@ func getPhoneIconConfig(iconName: String) -> UIImage.SymbolConfiguration {
   return iconConfig
 }
 
-/// Get the icon configurations for keys if the device is an iPad.
-///
-/// - Parameters
-///  - iconName: the name of the UIImage systemName icon to be used.
-func getPadIconConfig(iconName: String) -> UIImage.SymbolConfiguration {
-  keysThatAreSlightlyLarger.append("globe")
-  var iconConfig = UIImage.SymbolConfiguration(
-    pointSize: letterKeyWidth / 3,
-    weight: .light,
-    scale: .medium
-  )
-  if keysThatAreSlightlyLarger.contains(iconName) {
-    iconConfig = UIImage.SymbolConfiguration(
-      pointSize: letterKeyWidth / 2.75,
-      weight: .light,
-      scale: .medium
-    )
-  }
-  if isLandscapeView == true {
-    iconConfig = UIImage.SymbolConfiguration(
-      pointSize: letterKeyWidth / 3.75,
-      weight: .light,
-      scale: .medium
-    )
-    if keysThatAreSlightlyLarger.contains(iconName) {
-      iconConfig = UIImage.SymbolConfiguration(
-        pointSize: letterKeyWidth / 3.4,
-        weight: .light,
-        scale: .medium
-      )
-    }
-  }
-  keysThatAreSlightlyLarger.removeAll { $0 == "globe" }
-  return iconConfig
-}
-
 /// Styles buttons that have icon keys.
 ///
 /// - Parameters

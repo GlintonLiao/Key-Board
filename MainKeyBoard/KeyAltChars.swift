@@ -11,39 +11,9 @@ func setKeyboardAlternateKeys() {
   if DeviceType.isPhone {
     keysWithAlternates += symbolKeysWithAlternatesLeft
     keysWithAlternates += symbolKeysWithAlternatesRight
-    keysWithAlternates.append(currencySymbol)
     keysWithAlternatesLeft += symbolKeysWithAlternatesLeft
     keysWithAlternatesRight += symbolKeysWithAlternatesRight
-    keysWithAlternatesRight.append(currencySymbol)
   }
-
-  keyAlternatesDict = [
-    "a": aAlternateKeys,
-    "e": eAlternateKeys,
-    "е": еAlternateKeys, // Russian е
-    "i": iAlternateKeys,
-    "o": oAlternateKeys,
-    "u": uAlternateKeys,
-    "ä": äAlternateKeys,
-    "ö": öAlternateKeys,
-    "y": yAlternateKeys,
-    "s": sAlternateKeys,
-    "l": lAlternateKeys,
-    "z": zAlternateKeys,
-    "d": dAlternateKeys,
-    "c": cAlternateKeys,
-    "n": nAlternateKeys,
-    "ь": ьAlternateKeys,
-    "/": backslashAlternateKeys,
-    "?": questionMarkAlternateKeys,
-    "!": exclamationAlternateKeys,
-    "%": percentAlternateKeys,
-    "&": ampersandAlternateKeys,
-    "'": apostropheAlternateKeys,
-    "\"": quotationAlternateKeys,
-    "=": equalSignAlternateKeys,
-    currencySymbol: currencySymbolAlternates
-  ]
 }
 
 var alternatesKeyView: UIView!
@@ -60,14 +30,6 @@ var alternatesViewY = CGFloat(0)
 var alternatesBtnHeight = CGFloat(0)
 var alternatesCharHeight = CGFloat(0)
 
-// The main currency symbol that will receive the alternates view for iPhones.
-var currencySymbol: String = ""
-var currencySymbolAlternates = [String]()
-let dollarAlternateKeys = ["¢", "₽", "₩", "¥", "£", "€"]
-let euroAlternateKeys = ["¢", "₽", "₩", "¥", "£", "$"]
-let roubleAlternateKeys = ["¢", "₩", "¥", "£", "$", "€"]
-let kronaAlternateKeys = ["¢", "₽", "¥", "£", "$", "€"]
-
 // Symbol keys that have consistent alternates for iPhones.
 var symbolKeysWithAlternatesLeft = ["/", "?", "!", "%", "&"]
 let backslashAlternateKeys = ["\\"]
@@ -82,22 +44,6 @@ let equalSignAlternateKeys = ["≈", "±", "≠"]
 var keysWithAlternatesLeft = [String]()
 var keysWithAlternatesRight = [String]()
 var keyAlternatesDict = [String: [String]]()
-var aAlternateKeys = [String]()
-var eAlternateKeys = [String]()
-var еAlternateKeys = [String]() // Russian е
-var iAlternateKeys = [String]()
-var oAlternateKeys = [String]()
-var uAlternateKeys = [String]()
-var yAlternateKeys = [String]()
-var äAlternateKeys = [String]()
-var öAlternateKeys = [String]()
-var sAlternateKeys = [String]()
-var lAlternateKeys = [String]()
-var zAlternateKeys = [String]()
-var dAlternateKeys = [String]()
-var cAlternateKeys = [String]()
-var nAlternateKeys = [String]()
-var ьAlternateKeys = [String]()
 
 /// Creates the shape that allows left most buttons to pop up after being pressed.
 ///
@@ -114,13 +60,7 @@ func setAlternatesPathState(
   numAlternates: CGFloat,
   side: String
 ) {
-  if DeviceType.isPad {
-    widthMultiplier = 0.2
-    maxHeightMultiplier = 2.05
-    if isLandscapeView == true {
-      maxHeightMultiplier = 1.95
-    }
-  } else if DeviceType.isPhone {
+  if DeviceType.isPhone {
     widthMultiplier = 0.4
     maxHeightMultiplier = 2.125
     if isLandscapeView == true {
@@ -135,7 +75,7 @@ func setAlternatesPathState(
   if DeviceType.isPhone {
     heightBeforeTopCurves = vertStart - ( keyHeight * 1.8 )
     maxWidthCurveControl =  keyWidth * 0.5
-  } else if DeviceType.isPad || ( DeviceType.isPhone && isLandscapeView == true ) {
+  } else if DeviceType.isPhone && isLandscapeView == true {
     heightBeforeTopCurves = vertStart - ( keyHeight * 1.6 )
     maxWidthCurveControl =  keyWidth * 0.25
   }

@@ -1,7 +1,7 @@
 //
 //  Extensions.swift
 //
-//  Extensions for Scribe keyboards.
+//  Extensions for keyboards.
 //
 
 import UIKit

@@ -75,7 +75,7 @@ class KeyboardViewController: UIInputViewController {
       if view == stackView0 {
         view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
       } else if view == stackView1 {
-        view?.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
+        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
       } else if view == stackView2 {
         view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
       } else if view == stackView3 {
@@ -94,16 +94,19 @@ class KeyboardViewController: UIInputViewController {
       let btn = KeyboardKey(type: .custom)
       btn.style()
       var configuration = UIButton.Configuration.plain()
-      configuration.titleAlignment = .center
       if i == 0 {
         configuration.attributedTitle = AttributedString("C++", attributes: AttributeContainer([
+          NSAttributedString.Key.foregroundColor: UIColor(
+            red: 1,
+            green: 1,
+            blue: 1,
+            alpha: 1.0),
           NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
         ]))
         btn.backgroundColor = .systemPink
       } else if i == EnglishKeyboardConstants.commandKeys.count - 1 {
-        configuration.attributedTitle = AttributedString("Delete", attributes: AttributeContainer([
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
-        ]))
+        styleDeleteButton(btn, isPressed: false)
+        btn.backgroundColor = specialKeyColor
       } else {
         let r1 = EnglishKeyboardConstants.commandKeys[i][0]
         let r2 = EnglishKeyboardConstants.commandKeys[i][1]
@@ -152,6 +155,7 @@ class KeyboardViewController: UIInputViewController {
           alpha: 1.0),
         NSAttributedString.Key.font: UIFont(name: "Menlo", size: 16)!
       ]))
+      configuration.titleAlignment = .center
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: letterKeyWidth).isActive = true
       stackView2.addArrangedSubview(btn)
@@ -213,6 +217,10 @@ class KeyboardViewController: UIInputViewController {
         
         if btn.key == "shift" {
           styleIconBtn(btn: btn, color: keyCharColor, iconName: "shift")
+        }
+        
+        if btn.key == "return" {
+          styleIconBtn(btn: btn, color: keyCharColor, iconName: "return")
         }
         
         switch row {
