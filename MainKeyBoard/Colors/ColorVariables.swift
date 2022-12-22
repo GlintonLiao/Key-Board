@@ -15,7 +15,7 @@ var keyCharColor = UIColor(.keyChar)
 var specialKeyColor = UIColor(.keySpecial)
 var keyPressedColor = UIColor(.keyPressed)
 
-var commandKeyColor = UIColor(.commandKey)
+var commandKeyColor = UIColor(.keySpecial)
 var commandBarColor = UIColor(.commandBar)
 var commandBarBorderColor = UIColor(.commandBarBorder).cgColor
 

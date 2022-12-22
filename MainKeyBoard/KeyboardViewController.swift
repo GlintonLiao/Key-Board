@@ -215,14 +215,6 @@ class KeyboardViewController: UIInputViewController {
           btn.rightShift = -(rightPadding)
         }
         
-        if btn.key == "shift" {
-          styleIconBtn(btn: btn, color: keyCharColor, iconName: "shift")
-        }
-        
-        if btn.key == "return" {
-          styleIconBtn(btn: btn, color: keyCharColor, iconName: "return")
-        }
-        
         switch row {
         case 0: stackView3.addArrangedSubview(btn)
         case 1: stackView4.addArrangedSubview(btn)
@@ -247,15 +239,15 @@ class KeyboardViewController: UIInputViewController {
         
         // Perform custom UI setup here
         self.nextKeyboardButton = UIButton(type: .system)
-        
+
         self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
         self.nextKeyboardButton.sizeToFit()
         self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
-        
+
         self.view.addSubview(self.nextKeyboardButton)
-        
+
         self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }

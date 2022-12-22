@@ -52,8 +52,8 @@ class KeyboardKey: UIButton {
     }
     var capsKey = ""
 
-    if self.key != "ß"
-        && self.key != "´"
+    if self.key != "tab"
+        && self.key != ":"
         && self.key != spaceBar {
       capsKey = keyboard[self.row][self.idx].capitalized
     } else {
@@ -70,21 +70,14 @@ class KeyboardKey: UIButton {
   /// Sets the character size of a capital key if the device is an iPhone given the orientation.
   func setPhoneCapCharSize() {
     if isLandscapeView == true {
-      if self.key == "#+="
-          || self.key == "ABC"
-          || self.key == "АБВ"
-          || self.key == "123" {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 3.5)
-      } else if self.key == spaceBar {
+      if self.key == spaceBar {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 4)
       } else {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.9)
       }
     } else {
-      if self.key == "#+=" {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.75)
-      } else if self.key == spaceBar {
-        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
+      if self.key == "space" {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 4)
       } else {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
@@ -95,19 +88,16 @@ class KeyboardKey: UIButton {
   func checkSetPhoneLowerCharSize() {
     guard let isSpecial = self.layer.value(forKey: "isSpecial") as? Bool else { return }
 
-    if keyboardState == .letters
-        && isSpecial == false
-        && !["123", "´", spaceBar].contains(self.key)
+    if isSpecial == false
+        && self.key != "space"
         && shiftButtonState == .normal {
-      self.titleEdgeInsets = UIEdgeInsets(top: -4.0, left: 0.0, bottom: 0.0, right: 0.0)
-
       if isLandscapeView == true {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.4)
       } else {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
     } else {
-      self.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+      self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
     }
   }
 
@@ -132,9 +122,7 @@ class KeyboardKey: UIButton {
       || self.key == "selectKeyboard" {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 2 + numSymKeyWidth / 0.875 * 0.125).isActive = true
-    } else if self.key == ".?123"
-      || self.key == "return"
-      || self.key == "hideKeyboard" {
+    } else if self.key == "return" {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: numSymKeyWidth * 2 + numSymKeyWidth / 0.875 * 0.125).isActive = true
     } else if self.key == "space" {
@@ -160,10 +148,15 @@ class KeyboardKey: UIButton {
         styleIconBtn(btn: self, color: UIColor.label, iconName: "capslock.fill")
       } else {
         self.backgroundColor = specialKeyColor
+        styleIconBtn(btn: self, color: UIColor.label, iconName: "shift")
       }
     } else if self.key == "return" {
       // Color the return key depending on if it's being used as enter for commands.
       self.backgroundColor = commandKeyColor
+      styleIconBtn(btn: self, color: UIColor.label, iconName: "return")
+    } else if self.key == "tab" {
+      self.backgroundColor = commandKeyColor
+      styleIconBtn(btn: self, color: UIColor.label, iconName: "arrow.right.to.line")
     } else if isSpecial == true {
       self.backgroundColor = specialKeyColor
     }
@@ -182,15 +175,9 @@ func setBtn(btn: UIButton, color: UIColor, name: String, canCap: Bool, isSpecial
   btn.backgroundColor = color
   btn.layer.setValue(name, forKey: "original")
 
-  let charsWithoutShiftState = ["ß"]
-
   var capsKey = ""
   if canCap == true {
-    if !charsWithoutShiftState.contains(name) {
-      capsKey = name.capitalized
-    } else {
-      capsKey = name
-    }
+    capsKey = name.capitalized
     let shiftChar = shiftButtonState == .normal ? name : capsKey
     btn.layer.setValue(shiftChar, forKey: "keyToDisplay")
   } else {

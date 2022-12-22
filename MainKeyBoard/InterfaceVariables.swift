@@ -145,8 +145,8 @@ public enum EnglishKeyboardConstants {
     commandKeys = EnglishKeyboardConstants.commandKeys
     allKeys = Array(letterKeys.joined())  + Array(numberKeys.joined()) + Array(commandKeys.joined())
     
-    leftKeyChars = ["q", "1", "-", "[", "_"]
-    rightKeyChars = ["p", "0", "\"", "=", "·"]
+    leftKeyChars = ["q", "1", "a"]
+    rightKeyChars = ["p", "0", ":", ";"]
     centralKeyChars = allKeys.filter { !leftKeyChars.contains($0) && !rightKeyChars.contains($0) }
   }
   
