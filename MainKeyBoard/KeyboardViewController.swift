@@ -106,6 +106,9 @@ class KeyboardViewController: UIInputViewController {
     case "tab":
       proxy.insertText("    ")
       return
+    case "shift":
+      shiftButtonState = shiftButtonState == .normal ? .shift : .normal
+      loadKeys()
     default:
       proxy.insertText(keyToDisplay)
     }
@@ -126,9 +129,12 @@ class KeyboardViewController: UIInputViewController {
     letterKeys = EnglishKeyboardConstants.lettersKeys
     letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
     commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
-    numSymKeyWidth = letterKeyWidth
     keyCornerRadius = letterKeyWidth / 6
     keyWidth = letterKeyWidth
+    
+    // clear the previous layout
+    keyboardKeys.forEach {$0.removeFromSuperview()}
+    
     for view in [stackView0, stackView1, stackView2, stackView3, stackView4, stackView5, stackView6] {
       view?.isUserInteractionEnabled = true
       view?.isLayoutMarginsRelativeArrangement = true
@@ -169,6 +175,9 @@ class KeyboardViewController: UIInputViewController {
       } else if i == EnglishKeyboardConstants.commandKeys.count - 1 {
         styleDeleteButton(btn, isPressed: false)
         btn.backgroundColor = specialKeyColor
+        btn.layer.setValue("delete", forKey: "original")
+        btn.layer.setValue("delete", forKey: "keyToDisplay")
+        btn.layer.setValue(true, forKey: "isSpecial")
       } else {
         let r1 = EnglishKeyboardConstants.commandKeys[i][0]
         let r2 = EnglishKeyboardConstants.commandKeys[i][1]
@@ -192,6 +201,7 @@ class KeyboardViewController: UIInputViewController {
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: commandKeyWidth).isActive = true
       activateBtn(btn: btn)
+      keyboardKeys.append(btn)
       stackView1.addArrangedSubview(btn)
     }
     
@@ -200,8 +210,15 @@ class KeyboardViewController: UIInputViewController {
       let btn = KeyboardKey(type: .custom)
       btn.style()
       var configuration = UIButton.Configuration.plain()
-      let r1 = EnglishKeyboardConstants.numbersAndSymbols[i][0]
-      let r2 = EnglishKeyboardConstants.numbersAndSymbols[i][1]
+      var r1 = EnglishKeyboardConstants.numbersAndSymbols[i][0]
+      var r2 = EnglishKeyboardConstants.numbersAndSymbols[i][1]
+      
+      if shiftButtonState == .shift {
+        let temp = r1;
+        r1 = r2;
+        r2 = temp
+      }
+      
       configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
         NSAttributedString.Key.foregroundColor: UIColor(
           red: 100/255.0,
@@ -221,7 +238,13 @@ class KeyboardViewController: UIInputViewController {
       configuration.titleAlignment = .center
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: letterKeyWidth).isActive = true
+      
+      btn.layer.setValue(r2, forKey: "original")
+      btn.layer.setValue(r2, forKey: "keyToDisplay")
+      btn.layer.setValue(false, forKey: "isSpecial")
+      
       activateBtn(btn: btn)
+      keyboardKeys.append(btn)
       stackView2.addArrangedSubview(btn)
     }
     

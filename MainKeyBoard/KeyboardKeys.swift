@@ -72,13 +72,13 @@ class KeyboardKey: UIButton {
       if self.key == "space" {
         self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 4)
       } else {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.9)
+        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.5)
       }
     } else {
       if self.key == "space" {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 4)
       } else {
-        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
       }
     }
   }
@@ -95,7 +95,7 @@ class KeyboardKey: UIButton {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
     } else {
-      self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
+      self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
     }
     
     if self.key == ":"
