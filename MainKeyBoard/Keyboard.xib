@@ -19,9 +19,9 @@
                 <outlet property="stackView4" destination="zi3-7F-H9y" id="D13-Sm-DaL"/>
                 <outlet property="stackView5" destination="yaZ-Iw-qOn" id="ABI-Ci-6WU"/>
                 <outlet property="stackView6" destination="VAc-qh-fqb" id="P61-HI-Cz0"/>
-                <outlet property="sugestion2" destination="efo-T9-p6h" id="f49-JS-zh2"/>
                 <outlet property="suggestion0" destination="vCg-Pe-y1j" id="L7d-BT-20a"/>
                 <outlet property="suggestion1" destination="Q1d-eo-qaL" id="qRI-3A-Jlf"/>
+                <outlet property="suggestion2" destination="efo-T9-p6h" id="NDu-WW-n74"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -32,13 +32,17 @@
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MFF-Jf-e78" userLabel="StackV0">
                     <rect key="frame" x="3" y="0.0" width="311" height="45.666666666666664"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCg-Pe-y1j" userLabel="btn1">
-                            <rect key="frame" x="0.0" y="5.6666666666666679" width="103" height="34.333333333333329"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCg-Pe-y1j" userLabel="btn1">
+                            <rect key="frame" x="0.0" y="4.6666666666666679" width="103" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-YB-Jih" userLabel="Label1">
-                            <rect key="frame" x="103" y="5.6666666666666679" width="1" height="34.333333333333329"/>
+                            <rect key="frame" x="103" y="4.6666666666666679" width="1" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="iDm-0P-IsA"/>
                             </constraints>
@@ -46,13 +50,17 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1d-eo-qaL" userLabel="btn2">
-                            <rect key="frame" x="104" y="5.6666666666666679" width="103" height="34.333333333333329"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1d-eo-qaL" userLabel="btn2">
+                            <rect key="frame" x="104" y="4.6666666666666679" width="103" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Je-ed-4LD" userLabel="label2">
-                            <rect key="frame" x="207" y="5.6666666666666679" width="1" height="34.333333333333329"/>
+                            <rect key="frame" x="207" y="4.6666666666666679" width="1" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="0cn-MG-lRo"/>
                             </constraints>
@@ -60,10 +68,14 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efo-T9-p6h" userLabel="btn3">
-                            <rect key="frame" x="208" y="5.6666666666666679" width="103" height="34.333333333333329"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efo-T9-p6h" userLabel="btn3">
+                            <rect key="frame" x="208" y="4.6666666666666679" width="103" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                         </button>
                     </subviews>
                     <constraints>
@@ -142,6 +154,9 @@
         </view>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

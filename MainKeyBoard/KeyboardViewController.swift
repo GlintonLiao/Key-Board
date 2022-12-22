@@ -8,9 +8,6 @@
 import UIKit
 
 class KeyboardViewController: UIInputViewController {
-    
-  var keyboardView: UIView!
-  
   @IBOutlet weak var stackView0: UIStackView!
   @IBOutlet weak var stackView1: UIStackView!
   @IBOutlet weak var stackView2: UIStackView!
@@ -19,11 +16,14 @@ class KeyboardViewController: UIInputViewController {
   @IBOutlet weak var stackView5: UIStackView!
   @IBOutlet weak var stackView6: UIStackView!
   @IBOutlet var nextKeyboardButton: UIButton!
+  
   @IBOutlet weak var suggestion0: UIButton!
-  @IBOutlet weak var partition1: UILabel!
   @IBOutlet weak var suggestion1: UIButton!
-  @IBOutlet weak var sugestion2: UIButton!
+  @IBOutlet weak var suggestion2: UIButton!
+  @IBOutlet weak var partition1: UILabel!
   @IBOutlet weak var partition0: UILabel!
+  
+  var keyboardView: UIView!
   
   override func updateViewConstraints() {
     super.updateViewConstraints()
@@ -58,6 +58,68 @@ class KeyboardViewController: UIInputViewController {
       partition0.backgroundColor = UIColor(cgColor: commandBarBorderColor)
       partition1.backgroundColor = UIColor(cgColor: commandBarBorderColor)
     }
+  }
+  
+  func setAutoSuggestion() {
+    completionWords = ["void", "int", "string"]
+    
+    let prefix = proxy.documentContextBeforeInput?.components(separatedBy: " ").secondToLast() ?? ""
+
+    suggestion0.titleLabel?.font = UIFont(name: "Menlo", size: 18)
+    suggestion1.titleLabel?.font = UIFont(name: "Menlo", size: 18)
+    suggestion2.titleLabel?.font = UIFont(name: "Menlo", size: 18)
+    
+    suggestion0.setTitle(completionWords[0], for: .normal)
+    suggestion1.setTitle(completionWords[1], for: .normal)
+    suggestion2.setTitle(completionWords[2], for: .normal)
+  }
+  
+  // button state control
+  func activateBtn(btn: UIButton) {
+    btn.addTarget(self, action: #selector(executeKeyActions), for: .touchUpInside)
+    btn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
+    btn.addTarget(self, action: #selector(keyUntouched), for: .touchDragExit)
+    btn.isUserInteractionEnabled = true
+  }
+  
+  @IBAction func executeKeyActions(_ sender: UIButton) {
+    guard let originalKey = sender.layer.value(
+      forKey: "original"
+    ) as? String,
+      let keyToDisplay = sender.layer.value(forKey: "keyToDisplay") as? String else {
+      return
+    }
+    
+    guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
+    sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
+    
+    switch originalKey {
+    case "return":
+      proxy.insertText("\n")
+      return
+    case "delete":
+      proxy.deleteBackward()
+      return
+    case "space":
+      proxy.insertText(" ")
+      return
+    case "tab":
+      proxy.insertText("    ")
+      return
+    default:
+      proxy.insertText(keyToDisplay)
+    }
+  }
+  
+  // change style of btn when touchdown and up
+  @objc func keyTouchDown(_ sender: UIButton) {
+    guard sender.layer.value(forKey: "original") is String else { return }
+    sender.backgroundColor = keyPressedColor
+  }
+  
+  @objc func keyUntouched(_ sender: UIButton) {
+    guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
+    sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
   }
   
   func loadKeys() {
@@ -129,6 +191,7 @@ class KeyboardViewController: UIInputViewController {
       }
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: commandKeyWidth).isActive = true
+      activateBtn(btn: btn)
       stackView1.addArrangedSubview(btn)
     }
     
@@ -158,6 +221,7 @@ class KeyboardViewController: UIInputViewController {
       configuration.titleAlignment = .center
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: letterKeyWidth).isActive = true
+      activateBtn(btn: btn)
       stackView2.addArrangedSubview(btn)
     }
     
@@ -195,25 +259,16 @@ class KeyboardViewController: UIInputViewController {
         }
 
         // Pad left and right based on if the button has been shifted.
-        var leftPadding = CGFloat(0)
-        var widthOfSpacing = CGFloat(0)
-        widthOfSpacing = (
+        let widthOfSpacing = (
           (UIScreen.main.bounds.width - 6.0)
           - (CGFloat(letterKeys[0].count) * keyWidth)
           ) / (CGFloat(letterKeys[0].count)
           - 1.0
         )
-        if leftPadding == CGFloat(0) {
-          btn.leftShift = -(widthOfSpacing / 2)
-        } else {
-          btn.leftShift = -(leftPadding)
-        }
-        var rightPadding = CGFloat(0)
-        if rightPadding == CGFloat(0) {
-          btn.rightShift = -(widthOfSpacing / 2)
-        } else {
-          btn.rightShift = -(rightPadding)
-        }
+        btn.leftShift = -(widthOfSpacing / 2)
+        btn.rightShift = -(widthOfSpacing / 2)
+        
+        activateBtn(btn: btn)
         
         switch row {
         case 0: stackView3.addArrangedSubview(btn)
@@ -223,33 +278,32 @@ class KeyboardViewController: UIInputViewController {
         default:
           break
         }
-      
       }
     }
   }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
+
+      proxy = textDocumentProxy as UITextDocumentProxy
+      loadInterface()
+      loadKeys()
+      setAutoPartition()
+      setAutoSuggestion()
       
-        print("Load")
-        proxy = textDocumentProxy as UITextDocumentProxy
-        loadInterface()
-        loadKeys()
-        setAutoPartition()
-        
-        // Perform custom UI setup here
-        self.nextKeyboardButton = UIButton(type: .system)
+      // Perform custom UI setup here
+      self.nextKeyboardButton = UIButton(type: .system)
 
-        self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
-        self.nextKeyboardButton.sizeToFit()
-        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
+      self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
+      self.nextKeyboardButton.sizeToFit()
+      self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
 
-        self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+      self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
 
-        self.view.addSubview(self.nextKeyboardButton)
+      self.view.addSubview(self.nextKeyboardButton)
 
-        self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+      self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+      self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
     override func viewWillLayoutSubviews() {
@@ -273,5 +327,4 @@ class KeyboardViewController: UIInputViewController {
         }
         self.nextKeyboardButton.setTitleColor(textColor, for: [])
     }
-
 }

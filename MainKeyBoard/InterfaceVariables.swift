@@ -154,4 +154,5 @@ public enum EnglishKeyboardConstants {
   func setENKeyboardLayout() {
     getENKeys()
     spaceBar = "space"
+    baseAutosuggestions = ["int", "void", "string"]
   }

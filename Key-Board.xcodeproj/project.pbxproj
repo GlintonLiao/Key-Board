@@ -72,6 +72,7 @@
 		38BD214222D5908100C6795D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38DD94F022D6A40000FF8845 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C7443DE8294D3F710009F1B2 /* AppScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AppScreen.storyboard; sourceTree = "<group>"; };
+		C747130E29541AE700C54784 /* autosuggestions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = autosuggestions.json; sourceTree = "<group>"; };
 		C798947229514E560019324F /* MainKeyBoard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainKeyBoard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C798947429514E560019324F /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		C798947629514E560019324F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,9 +159,18 @@
 			path = "Key-Board";
 			sourceTree = "<group>";
 		};
+		C747130D29541AC900C54784 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C747130E29541AE700C54784 /* autosuggestions.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		C798947329514E560019324F /* MainKeyBoard */ = {
 			isa = PBXGroup;
 			children = (
+				C747130D29541AC900C54784 /* Data */,
 				CE1378C128F5D7AC00E1CBC2 /* Colors */,
 				C7989489295159AE0019324F /* CommandVariables.swift */,
 				38DD94F022D6A40000FF8845 /* Extensions.swift */,
