@@ -104,7 +104,13 @@ class KeyboardViewController: UIInputViewController {
       proxy.insertText(" ")
       return
     case "tab":
-      proxy.insertText("    ")
+      if shiftButtonState == .normal {
+        proxy.insertText("    ")
+      } else {
+        for _ in 0..<4 {
+          proxy.deleteBackward()
+        }
+      }
       return
     case "shift":
       shiftButtonState = shiftButtonState == .normal ? .shift : .normal
@@ -125,44 +131,60 @@ class KeyboardViewController: UIInputViewController {
     sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
   }
   
-  func loadKeys() {
-    letterKeys = EnglishKeyboardConstants.lettersKeys
-    letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
-    commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
-    keyCornerRadius = letterKeyWidth / 6
-    keyWidth = letterKeyWidth
+  @objc func keyMultiPress(_ sender: UIButton, event: UIEvent) {
+    guard var originalKey = sender.layer.value(forKey: "original") as? String else { return }
+    let touch: UITouch = event.allTouches!.first!
     
-    // clear the previous layout
-    keyboardKeys.forEach {$0.removeFromSuperview()}
-    
-    for view in [stackView0, stackView1, stackView2, stackView3, stackView4, stackView5, stackView6] {
-      view?.isUserInteractionEnabled = true
-      view?.isLayoutMarginsRelativeArrangement = true
-
-      // Set edge insets for stack views to provide vertical key spacing.
-      if view == stackView0 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView1 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView2 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView3 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView4 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView5 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-      } else if view == stackView6 {
-        view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+    // caps lock for two taps of shift
+    if touch.tapCount == 2 && originalKey == "shift" {
+      shiftButtonState = .caps
+      loadKeys()
+    }
+  }
+  
+  @objc func deleteLongPressed(_ gesture: UIGestureRecognizer) {
+    // delete will be speed up base on the number of deletes that have been completed
+    var deleteCount = 0
+    if gesture.state == .began {
+      backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) {
+        (_) in
+        deleteCount += 1
+        proxy.deleteBackward()
+        
+        if deleteCount == 5 {
+          backspaceTimer?.invalidate()
+          backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.07, repeats: true) {
+            (_) in
+            deleteCount += 1
+            proxy.deleteBackward()
+            
+            if deleteCount == 20 {
+              backspaceTimer?.invalidate()
+              backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) {
+                (_) in
+                proxy.deleteBackward()
+              }
+            }
+          }
+        }
+      }
+    } else if gesture.state == .ended || gesture.state == .cancelled {
+      backspaceTimer?.invalidate()
+      backspaceTimer = nil
+      if let button = gesture.view as? UIButton {
+        button.backgroundColor = specialKeyColor
+        styleDeleteButton(button, isPressed: false)
       }
     }
-    
-    // set the command line
+  }
+  
+  // set command bar
+  func loadCommandKeys() {
     for i in 0..<EnglishKeyboardConstants.commandKeys.count {
       let btn = KeyboardKey(type: .custom)
       btn.style()
       var configuration = UIButton.Configuration.plain()
-      if i == 0 {
+      if i == 0 {  // coding language
         configuration.attributedTitle = AttributedString("C++", attributes: AttributeContainer([
           NSAttributedString.Key.foregroundColor: UIColor(
             red: 1,
@@ -172,8 +194,10 @@ class KeyboardViewController: UIInputViewController {
           NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
         ]))
         btn.backgroundColor = .systemPink
-      } else if i == EnglishKeyboardConstants.commandKeys.count - 1 {
+      } else if i == EnglishKeyboardConstants.commandKeys.count - 1 { // delete
         styleDeleteButton(btn, isPressed: false)
+        let deleteLongPressRecongizer = UILongPressGestureRecognizer(target: self, action: #selector(deleteLongPressed(_:)))
+        btn.addGestureRecognizer(deleteLongPressRecongizer)
         btn.backgroundColor = specialKeyColor
         btn.layer.setValue("delete", forKey: "original")
         btn.layer.setValue("delete", forKey: "keyToDisplay")
@@ -204,7 +228,9 @@ class KeyboardViewController: UIInputViewController {
       keyboardKeys.append(btn)
       stackView1.addArrangedSubview(btn)
     }
-    
+  }
+  
+  func loadNumberKeys() {
     // set the numbers line
     for i in 0..<EnglishKeyboardConstants.numbersAndSymbols.count {
       let btn = KeyboardKey(type: .custom)
@@ -247,6 +273,28 @@ class KeyboardViewController: UIInputViewController {
       keyboardKeys.append(btn)
       stackView2.addArrangedSubview(btn)
     }
+  }
+  
+  func loadKeys() {
+    letterKeys = EnglishKeyboardConstants.lettersKeys
+    letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
+    commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
+    keyCornerRadius = letterKeyWidth / 6
+    keyWidth = letterKeyWidth
+    
+    // clear the previous layout
+    keyboardKeys.forEach {$0.removeFromSuperview()}
+
+    for view in [stackView0, stackView1, stackView2, stackView3, stackView4, stackView5, stackView6] {
+      view?.isUserInteractionEnabled = true
+      view?.isLayoutMarginsRelativeArrangement = true
+
+      // Set edge insets for stack views to provide vertical key spacing.
+      view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+    }
+    
+    loadCommandKeys()
+    loadNumberKeys()
     
     let numRows = letterKeys.count
     keyboard = letterKeys
@@ -263,6 +311,10 @@ class KeyboardViewController: UIInputViewController {
         btn.adjustKeyWidth()
         
         keyboardKeys.append(btn)
+        
+        if btn.key == "shift" {
+          btn.addTarget(self, action: #selector(keyMultiPress(_:event:)), for: .touchDownRepeat)
+        }
         
         switch row {
         case 0:

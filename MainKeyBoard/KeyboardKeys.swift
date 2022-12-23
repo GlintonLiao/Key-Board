@@ -162,7 +162,11 @@ class KeyboardKey: UIButton {
       styleIconBtn(btn: self, color: UIColor.label, iconName: "return")
     } else if self.key == "tab" {
       self.backgroundColor = commandKeyColor
-      styleIconBtn(btn: self, color: UIColor.label, iconName: "arrow.right.to.line")
+      if shiftButtonState == .normal {
+        styleIconBtn(btn: self, color: UIColor.label, iconName: "arrow.right.to.line")
+      } else {
+        styleIconBtn(btn: self, color: UIColor.label, iconName: "arrow.left.to.line")
+      }
     } else if isSpecial == true {
       self.backgroundColor = specialKeyColor
     }
