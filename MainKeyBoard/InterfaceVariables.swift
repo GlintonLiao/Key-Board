@@ -17,7 +17,7 @@ var proxy: UITextDocumentProxy!
 var keyboard: [[String]] = [[String]]()
 var allKeys: [String] = [String]()
 let specialKeys = [
-  "shift", "delete", "selectKeyboard", "space", "return", "tab", "hideKeyboard"
+  "shift", "delete", "selectKeyboard", "space", "return", "tab"
 ]
 var allNonSpecialKeys: [String] = [String]()
 var keyboardHeight: CGFloat!
@@ -86,17 +86,6 @@ func checkLandscapeMode() {
   } else {
     isLandscapeView = false
   }
-}
-
-/// Sets the keyboard layout and its alternate keys.
-func setKeyboard() {
-  setKeyboardLayout()
-  setKeyboardAlternateKeys()
-}
-
-/// Sets the keyboard layouts given the chosen keyboard and device type.
-func setKeyboardLayout() {
-  print("SetKeyBoardLayout")
 }
 
 // Variables that define which keys are positioned on the very left, right or in the center of the keyboard.

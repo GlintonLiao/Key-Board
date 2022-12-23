@@ -243,8 +243,7 @@ class KeyboardViewController: UIInputViewController {
         btn.layer.setValue("delete", forKey: "keyToDisplay")
         btn.layer.setValue(true, forKey: "isSpecial")
       } else {
-        switch commandState {
-        case .idle:
+        if commandState == .idle {
           let r1 = EnglishKeyboardConstants.commandKeys[i][0]
           let r2 = EnglishKeyboardConstants.commandKeys[i][1]
           configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
@@ -266,10 +265,24 @@ class KeyboardViewController: UIInputViewController {
           btn.layer.setValue(baseKeySet[i], forKey: "original")
           btn.layer.setValue(baseKeySet[i], forKey: "keyToDisplay")
           btn.layer.setValue(false, forKey: "isSpecial")
-          break
-
-        case .colon:
-          let str = keySet0[i]
+        } else {
+          var str = ""
+          switch commandState {
+          case .colon:
+            str = keySet0[i]
+            break
+          case .leftPa:
+            str = keySet1[i]
+            break
+          case .rightPa:
+            str = keySet2[i]
+            break
+          case .line:
+            str = keySet3[i]
+            break
+          default:
+            break
+          }
           configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
             NSAttributedString.Key.foregroundColor: UIColor(
               red: 20/255.0,
@@ -281,52 +294,6 @@ class KeyboardViewController: UIInputViewController {
           btn.layer.setValue(str, forKey: "original")
           btn.layer.setValue(str, forKey: "keyToDisplay")
           btn.layer.setValue(false, forKey: "isSpecial")
-          break
-          
-        case .leftPa:
-          let str = keySet1[i]
-          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
-          ]))
-          btn.layer.setValue(str, forKey: "original")
-          btn.layer.setValue(str, forKey: "keyToDisplay")
-          btn.layer.setValue(false, forKey: "isSpecial")
-          break
-
-        case .rightPa:
-          let str = keySet2[i]
-          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
-          ]))
-          btn.layer.setValue(str, forKey: "original")
-          btn.layer.setValue(str, forKey: "keyToDisplay")
-          btn.layer.setValue(false, forKey: "isSpecial")
-          break
-
-        case .line:
-          let str = keySet3[i]
-          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
-          ]))
-          btn.layer.setValue(str, forKey: "original")
-          btn.layer.setValue(str, forKey: "keyToDisplay")
-          btn.layer.setValue(false, forKey: "isSpecial")
-          break
         }
       }
       btn.configuration = configuration

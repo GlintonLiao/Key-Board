@@ -81,7 +81,7 @@ func getPhoneIconConfig(iconName: String) -> UIImage.SymbolConfiguration {
 ///  - iconName: the name of the UIImage systemName icon to be used.
 func styleIconBtn(btn: UIButton, color: UIColor, iconName: String) {
   btn.setTitle("", for: .normal)
-  var iconConfig = getPhoneIconConfig(iconName: iconName)
+  let iconConfig = getPhoneIconConfig(iconName: iconName)
 
   btn.setImage(UIImage(systemName: iconName, withConfiguration: iconConfig), for: .normal)
   btn.tintColor = color
