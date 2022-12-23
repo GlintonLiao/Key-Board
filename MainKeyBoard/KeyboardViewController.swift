@@ -346,7 +346,7 @@ class KeyboardViewController: UIInputViewController {
       var r1 = EnglishKeyboardConstants.numbersAndSymbols[i][0]
       var r2 = EnglishKeyboardConstants.numbersAndSymbols[i][1]
       
-      if shiftButtonState == .shift {
+      if shiftButtonState != .normal {
         let temp = r1;
         r1 = r2;
         r2 = temp
