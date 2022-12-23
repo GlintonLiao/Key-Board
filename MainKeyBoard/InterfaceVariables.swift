@@ -54,6 +54,10 @@ enum ShiftButtonState {
 /// States of the keyboard corresponding to which commands the user is executing.
 enum CommandState {
   case idle
+  case colon
+  case leftPa
+  case rightPa
+  case line
 }
 
 /// States of the keyboard corresponding to which auto actions should be presented.
@@ -137,21 +141,27 @@ public enum EnglishKeyboardConstants {
     ["!", "1"], ["@", "2"], ["#", "3"], ["$", "4"], ["%", "5"], ["^", "6"], ["&", "7"], ["*", "8"], ["(", "9"], [")", "0"]
   ]
 }
+
+let keySet0 = ["", "|", "\\", "\"", "'"]
+let keySet1 = ["", "<", "(", "[", "{"]
+let keySet2 = ["", ">", ")", "]", "}"]
+let keySet3 = ["", "_", "-", "+", "="]
+let baseKeySet = ["", "colon", "leftPa", "rightPa", "line"]
   
-  /// Gets the keys for the English keyboard.
-  func getENKeys() {
-    letterKeys = EnglishKeyboardConstants.lettersKeys
-    commandKeys = EnglishKeyboardConstants.commandKeys
-    allKeys = Array(letterKeys.joined())  + Array(numberKeys.joined()) + Array(commandKeys.joined())
-    
-    leftKeyChars = ["q", "1", "a"]
-    rightKeyChars = ["p", "0", ":", ";"]
-    centralKeyChars = allKeys.filter { !leftKeyChars.contains($0) && !rightKeyChars.contains($0) }
-  }
+/// Gets the keys for the English keyboard.
+func getENKeys() {
+  letterKeys = EnglishKeyboardConstants.lettersKeys
+  commandKeys = EnglishKeyboardConstants.commandKeys
+  allKeys = Array(letterKeys.joined())  + Array(numberKeys.joined()) + Array(commandKeys.joined())
   
-  /// Provides an English keyboard layout.
-  func setENKeyboardLayout() {
-    getENKeys()
-    spaceBar = "space"
-    baseAutosuggestions = ["int", "void", "string"]
-  }
+  leftKeyChars = ["q", "1", "a"]
+  rightKeyChars = ["p", "0", ":", ";"]
+  centralKeyChars = allKeys.filter { !leftKeyChars.contains($0) && !rightKeyChars.contains($0) }
+}
+
+/// Provides an English keyboard layout.
+func setENKeyboardLayout() {
+  getENKeys()
+  spaceBar = "space"
+  baseAutosuggestions = ["int", "void", "string"]
+}

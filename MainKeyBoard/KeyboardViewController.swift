@@ -96,13 +96,19 @@ class KeyboardViewController: UIInputViewController {
     switch originalKey {
     case "return":
       proxy.insertText("\n")
-      return
+      break
     case "delete":
-      proxy.deleteBackward()
-      return
+      if commandState != .idle {
+        commandState = .idle
+        loadKeys()
+      } else {
+        proxy.deleteBackward()
+        loadKeys()
+      }
+      break
     case "space":
       proxy.insertText(" ")
-      return
+      break
     case "tab":
       if shiftButtonState == .normal {
         proxy.insertText("    ")
@@ -111,28 +117,62 @@ class KeyboardViewController: UIInputViewController {
           proxy.deleteBackward()
         }
       }
-      return
+      break
     case "shift":
       shiftButtonState = shiftButtonState == .normal ? .shift : .normal
       loadKeys()
+      break
+    case "colon":
+      commandState = .colon
+      loadKeys()
+      print("colon")
+      break
+    case "leftPa":
+      commandState = .leftPa
+      loadKeys()
+      break
+    case "rightPa":
+      commandState = .rightPa
+      loadKeys()
+      break
+    case "line":
+      commandState = .line
+      loadKeys()
     default:
       proxy.insertText(keyToDisplay)
+      if shiftButtonState == .shift {
+        shiftButtonState = .normal
+        loadKeys()
+      }
+      if commandState != .idle {
+        commandState = .idle
+        loadKeys()
+      }
     }
   }
   
   // change style of btn when touchdown and up
   @objc func keyTouchDown(_ sender: UIButton) {
-    guard sender.layer.value(forKey: "original") is String else { return }
+    guard let key = sender.layer.value(forKey: "original") as? String else { return }
     sender.backgroundColor = keyPressedColor
+    if key == "delete" {
+      styleDeleteButton(sender, isPressed: true)
+    }
   }
   
   @objc func keyUntouched(_ sender: UIButton) {
     guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
+    guard let originalKey = sender.layer.value(forKey: "original") as? String else { return }
     sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
+    print("untouch")
+    if originalKey == "delete" {
+      print("untouch")
+      styleDeleteButton(sender, isPressed: false)
+    }
   }
   
   @objc func keyMultiPress(_ sender: UIButton, event: UIEvent) {
-    guard var originalKey = sender.layer.value(forKey: "original") as? String else { return }
+    guard let originalKey = sender.layer.value(forKey: "original") as? String else { return }
     let touch: UITouch = event.allTouches!.first!
     
     // caps lock for two taps of shift
@@ -203,24 +243,91 @@ class KeyboardViewController: UIInputViewController {
         btn.layer.setValue("delete", forKey: "keyToDisplay")
         btn.layer.setValue(true, forKey: "isSpecial")
       } else {
-        let r1 = EnglishKeyboardConstants.commandKeys[i][0]
-        let r2 = EnglishKeyboardConstants.commandKeys[i][1]
-        configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 20/255.0,
-            green: 20/255.0,
-            blue: 20/255.0,
-            alpha: 1.0),
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
-        ]))
-        configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 20/255.0,
-            green: 20/255.0,
-            blue: 20/255.0,
-            alpha: 1.0),
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
-        ]))
+        switch commandState {
+        case .idle:
+          let r1 = EnglishKeyboardConstants.commandKeys[i][0]
+          let r2 = EnglishKeyboardConstants.commandKeys[i][1]
+          configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
+          ]))
+          configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
+          ]))
+          btn.layer.setValue(baseKeySet[i], forKey: "original")
+          btn.layer.setValue(baseKeySet[i], forKey: "keyToDisplay")
+          btn.layer.setValue(false, forKey: "isSpecial")
+          break
+
+        case .colon:
+          let str = keySet0[i]
+          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
+          ]))
+          btn.layer.setValue(str, forKey: "original")
+          btn.layer.setValue(str, forKey: "keyToDisplay")
+          btn.layer.setValue(false, forKey: "isSpecial")
+          break
+          
+        case .leftPa:
+          let str = keySet1[i]
+          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
+          ]))
+          btn.layer.setValue(str, forKey: "original")
+          btn.layer.setValue(str, forKey: "keyToDisplay")
+          btn.layer.setValue(false, forKey: "isSpecial")
+          break
+
+        case .rightPa:
+          let str = keySet2[i]
+          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
+          ]))
+          btn.layer.setValue(str, forKey: "original")
+          btn.layer.setValue(str, forKey: "keyToDisplay")
+          btn.layer.setValue(false, forKey: "isSpecial")
+          break
+
+        case .line:
+          let str = keySet3[i]
+          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
+            NSAttributedString.Key.foregroundColor: UIColor(
+              red: 20/255.0,
+              green: 20/255.0,
+              blue: 20/255.0,
+              alpha: 1.0),
+            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
+          ]))
+          btn.layer.setValue(str, forKey: "original")
+          btn.layer.setValue(str, forKey: "keyToDisplay")
+          btn.layer.setValue(false, forKey: "isSpecial")
+          break
+        }
       }
       btn.configuration = configuration
       btn.widthAnchor.constraint(equalToConstant: commandKeyWidth).isActive = true
