@@ -71,6 +71,16 @@ class KeyboardViewController: UIInputViewController {
       for i in 0..<3 {
         completionWords.append(suggestions[i])
       }
+      UIView.animate(withDuration: 0.2) {
+        self.suggestion0.titleLabel?.alpha = 0.0
+        self.suggestion1.titleLabel?.alpha = 0.0
+        self.suggestion2.titleLabel?.alpha = 0.0
+      }
+      UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn) {
+        self.suggestion0.titleLabel?.alpha = 1.0
+        self.suggestion1.titleLabel?.alpha = 1.0
+        self.suggestion2.titleLabel?.alpha = 1.0
+      }
     }
 
     suggestion0.titleLabel?.font = UIFont(name: "Menlo", size: 18)
@@ -97,19 +107,6 @@ class KeyboardViewController: UIInputViewController {
   @IBAction func executeAutoSuggestion(_ sender: UIButton) {
     proxy.insertText(sender.titleLabel?.text ?? "")
     proxy.insertText(" ")
-    suggestion0.setTitle("", for: .normal)
-    suggestion1.setTitle("", for: .normal)
-    suggestion2.setTitle("", for: .normal)
-    UIView.animate(withDuration: 0.2) {
-      self.suggestion0.titleLabel?.alpha = 0.0
-      self.suggestion1.titleLabel?.alpha = 0.0
-      self.suggestion2.titleLabel?.alpha = 0.0
-    }
-    UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn) {
-      self.suggestion0.titleLabel?.alpha = 1.0
-      self.suggestion1.titleLabel?.alpha = 1.0
-      self.suggestion2.titleLabel?.alpha = 1.0
-    }
     setAutoSuggestion()
     sender.backgroundColor = .clear
     loadKeys()
@@ -190,6 +187,7 @@ class KeyboardViewController: UIInputViewController {
         loadKeys()
       }
     }
+    setAutoSuggestion()
   }
   
   // change style of btn when touchdown and up
