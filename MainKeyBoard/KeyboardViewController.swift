@@ -64,6 +64,14 @@ class KeyboardViewController: UIInputViewController {
     completionWords = ["void", "int", "string"]
     
     let prefix = proxy.documentContextBeforeInput?.components(separatedBy: " ").secondToLast() ?? ""
+    
+    if autosuggestions[prefix.lowercased()].exists() {
+      let suggestions: [String] = autosuggestions[prefix.lowercased()].rawValue as! [String]
+      completionWords = [String]()
+      for i in 0..<3 {
+        completionWords.append(suggestions[i])
+      }
+    }
 
     suggestion0.titleLabel?.font = UIFont(name: "Menlo", size: 18)
     suggestion1.titleLabel?.font = UIFont(name: "Menlo", size: 18)
@@ -72,8 +80,41 @@ class KeyboardViewController: UIInputViewController {
     suggestion0.setTitle(completionWords[0], for: .normal)
     suggestion1.setTitle(completionWords[1], for: .normal)
     suggestion2.setTitle(completionWords[2], for: .normal)
+    
+    suggestion0.addTarget(self, action: #selector(executeAutoSuggestion), for: .touchUpInside)
+    suggestion1.addTarget(self, action: #selector(executeAutoSuggestion), for: .touchUpInside)
+    suggestion2.addTarget(self, action: #selector(executeAutoSuggestion), for: .touchUpInside)
+    
+    suggestion0.addTarget(self, action: (#selector(suggestionTouchDown)), for: .touchDown)
+    suggestion1.addTarget(self, action: #selector(suggestionTouchDown), for: .touchDown)
+    suggestion2.addTarget(self, action: #selector(suggestionTouchDown), for: .touchDown)
   }
   
+  @IBAction func suggestionTouchDown(_ sender: UIButton) {
+    sender.backgroundColor = keyPressedColor
+  }
+  
+  @IBAction func executeAutoSuggestion(_ sender: UIButton) {
+    proxy.insertText(sender.titleLabel?.text ?? "")
+    proxy.insertText(" ")
+    suggestion0.setTitle("", for: .normal)
+    suggestion1.setTitle("", for: .normal)
+    suggestion2.setTitle("", for: .normal)
+    UIView.animate(withDuration: 0.2) {
+      self.suggestion0.titleLabel?.alpha = 0.0
+      self.suggestion1.titleLabel?.alpha = 0.0
+      self.suggestion2.titleLabel?.alpha = 0.0
+    }
+    UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn) {
+      self.suggestion0.titleLabel?.alpha = 1.0
+      self.suggestion1.titleLabel?.alpha = 1.0
+      self.suggestion2.titleLabel?.alpha = 1.0
+    }
+    setAutoSuggestion()
+    sender.backgroundColor = .clear
+    loadKeys()
+  }
+    
   // button state control
   func activateBtn(btn: UIButton) {
     btn.addTarget(self, action: #selector(executeKeyActions), for: .touchUpInside)

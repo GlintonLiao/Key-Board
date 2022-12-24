@@ -12,6 +12,7 @@
 		38BD213E22D5908100C6795D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38BD213D22D5908100C6795D /* Assets.xcassets */; };
 		38BD214122D5908100C6795D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38BD213F22D5908100C6795D /* LaunchScreen.storyboard */; };
 		C7443DE9294D42450009F1B2 /* AppScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7443DE8294D3F710009F1B2 /* AppScreen.storyboard */; };
+		C747130F2956778B00C54784 /* autosuggestions.json in Resources */ = {isa = PBXBuildFile; fileRef = C747130E29541AE700C54784 /* autosuggestions.json */; };
 		C798947529514E560019324F /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C798947429514E560019324F /* KeyboardViewController.swift */; };
 		C798947929514E560019324F /* MainKeyBoard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C798947229514E560019324F /* MainKeyBoard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C798947D2951585F0019324F /* LoadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D190B24D2741B61000705659 /* LoadData.swift */; };
@@ -320,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C747130F2956778B00C54784 /* autosuggestions.json in Resources */,
 				C798948C295159DD0019324F /* Assets.xcassets in Resources */,
 				C798948B295159CB0019324F /* Keyboard.xib in Resources */,
 			);

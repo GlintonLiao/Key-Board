@@ -33,7 +33,7 @@
                     <rect key="frame" x="3" y="0.0" width="311" height="45.666666666666664"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCg-Pe-y1j" userLabel="btn1">
-                            <rect key="frame" x="0.0" y="4.6666666666666679" width="103" height="36"/>
+                            <rect key="frame" x="0.0" y="0.0" width="103" height="45.666666666666664"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -42,7 +42,7 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-YB-Jih" userLabel="Label1">
-                            <rect key="frame" x="103" y="4.6666666666666679" width="1" height="36"/>
+                            <rect key="frame" x="103" y="4.6666666666666679" width="1" height="36.333333333333329"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="iDm-0P-IsA"/>
                             </constraints>
@@ -51,7 +51,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1d-eo-qaL" userLabel="btn2">
-                            <rect key="frame" x="104" y="4.6666666666666679" width="103" height="36"/>
+                            <rect key="frame" x="104" y="0.0" width="103" height="45.666666666666664"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -60,7 +60,7 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Je-ed-4LD" userLabel="label2">
-                            <rect key="frame" x="207" y="4.6666666666666679" width="1" height="36"/>
+                            <rect key="frame" x="207" y="4.6666666666666679" width="1" height="36.333333333333329"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1" id="0cn-MG-lRo"/>
                             </constraints>
@@ -69,7 +69,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efo-T9-p6h" userLabel="btn3">
-                            <rect key="frame" x="208" y="4.6666666666666679" width="103" height="36"/>
+                            <rect key="frame" x="208" y="0.0" width="103" height="45.666666666666664"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -80,7 +80,8 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="Q1d-eo-qaL" firstAttribute="leading" secondItem="Jdc-YB-Jih" secondAttribute="trailing" id="0bI-k2-9fq"/>
-                        <constraint firstItem="Jdc-YB-Jih" firstAttribute="height" secondItem="vCg-Pe-y1j" secondAttribute="height" id="1qb-v9-V4r"/>
+                        <constraint firstItem="Jdc-YB-Jih" firstAttribute="height" secondItem="vCg-Pe-y1j" secondAttribute="height" multiplier="0.8" id="1qb-v9-V4r"/>
+                        <constraint firstItem="vCg-Pe-y1j" firstAttribute="height" secondItem="MFF-Jf-e78" secondAttribute="height" id="5BA-ft-Hta"/>
                         <constraint firstItem="efo-T9-p6h" firstAttribute="width" secondItem="Q1d-eo-qaL" secondAttribute="width" id="AWt-mO-hPi"/>
                         <constraint firstItem="Jdc-YB-Jih" firstAttribute="centerY" secondItem="MFF-Jf-e78" secondAttribute="centerY" id="E31-6A-jZC"/>
                         <constraint firstItem="2Je-ed-4LD" firstAttribute="centerY" secondItem="MFF-Jf-e78" secondAttribute="centerY" id="G8h-ns-gpg"/>
@@ -95,7 +96,7 @@
                         <constraint firstItem="Q1d-eo-qaL" firstAttribute="height" secondItem="vCg-Pe-y1j" secondAttribute="height" id="phA-Yo-99g"/>
                         <constraint firstItem="Jdc-YB-Jih" firstAttribute="leading" secondItem="vCg-Pe-y1j" secondAttribute="trailing" id="qRT-ib-tCk"/>
                         <constraint firstItem="vCg-Pe-y1j" firstAttribute="leading" secondItem="MFF-Jf-e78" secondAttribute="leading" id="x58-Ul-lqJ"/>
-                        <constraint firstItem="2Je-ed-4LD" firstAttribute="height" secondItem="Q1d-eo-qaL" secondAttribute="height" id="xFG-69-7Yh"/>
+                        <constraint firstItem="2Je-ed-4LD" firstAttribute="height" secondItem="Q1d-eo-qaL" secondAttribute="height" multiplier="0.8" id="xFG-69-7Yh"/>
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="xYB-wV-ziM" userLabel="StackV1">
