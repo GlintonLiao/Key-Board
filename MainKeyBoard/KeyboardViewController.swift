@@ -43,6 +43,7 @@ class KeyboardViewController: UIInputViewController {
     keyboardView.frame.size = view.frame.size
   }
   
+  // load nib layout file
   func loadInterface() {
     let keyBoardNib = UINib(nibName: "Keyboard", bundle: nil)
     keyboardView = keyBoardNib.instantiate(withOwner: self, options: nil)[0] as? UIView
@@ -95,7 +96,7 @@ class KeyboardViewController: UIInputViewController {
     suggestion1.addTarget(self, action: #selector(executeAutoSuggestion), for: .touchUpInside)
     suggestion2.addTarget(self, action: #selector(executeAutoSuggestion), for: .touchUpInside)
     
-    suggestion0.addTarget(self, action: (#selector(suggestionTouchDown)), for: .touchDown)
+    suggestion0.addTarget(self, action: #selector(suggestionTouchDown), for: .touchDown)
     suggestion1.addTarget(self, action: #selector(suggestionTouchDown), for: .touchDown)
     suggestion2.addTarget(self, action: #selector(suggestionTouchDown), for: .touchDown)
   }
@@ -116,7 +117,6 @@ class KeyboardViewController: UIInputViewController {
   func activateBtn(btn: UIButton) {
     btn.addTarget(self, action: #selector(executeKeyActions), for: .touchUpInside)
     btn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
-    btn.addTarget(self, action: #selector(keyUntouched), for: .touchDragExit)
     btn.isUserInteractionEnabled = true
   }
   
@@ -124,17 +124,21 @@ class KeyboardViewController: UIInputViewController {
     guard let originalKey = sender.layer.value(
       forKey: "original"
     ) as? String,
-      let keyToDisplay = sender.layer.value(forKey: "keyToDisplay") as? String else {
+      let keyToDisplay = sender.layer.value(
+        forKey: "keyToDisplay"
+    ) as? String,
+          let isSpecial = sender.layer.value(
+        forKey: "isSpecial"
+    ) as? Bool else {
       return
     }
     
-    guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
     sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
     
     switch originalKey {
     case "return":
       proxy.insertText("\n")
-      break
+
     case "delete":
       if commandState != .idle {
         commandState = .idle
@@ -143,10 +147,10 @@ class KeyboardViewController: UIInputViewController {
         proxy.deleteBackward()
         loadKeys()
       }
-      break
+
     case "space":
       proxy.insertText(" ")
-      break
+
     case "tab":
       if shiftButtonState == .normal {
         proxy.insertText("    ")
@@ -155,27 +159,28 @@ class KeyboardViewController: UIInputViewController {
           proxy.deleteBackward()
         }
       }
-      break
+
     case "shift":
       shiftButtonState = shiftButtonState == .normal ? .shift : .normal
       loadKeys()
-      break
+
     case "colon":
       commandState = .colon
       loadKeys()
       print("colon")
-      break
+
     case "leftPa":
       commandState = .leftPa
       loadKeys()
-      break
+
     case "rightPa":
       commandState = .rightPa
       loadKeys()
-      break
+
     case "line":
       commandState = .line
       loadKeys()
+
     default:
       proxy.insertText(keyToDisplay)
       if shiftButtonState == .shift {
@@ -199,17 +204,6 @@ class KeyboardViewController: UIInputViewController {
     }
   }
   
-  @objc func keyUntouched(_ sender: UIButton) {
-    guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
-    guard let originalKey = sender.layer.value(forKey: "original") as? String else { return }
-    sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
-    print("untouch")
-    if originalKey == "delete" {
-      print("untouch")
-      styleDeleteButton(sender, isPressed: false)
-    }
-  }
-  
   @objc func keyMultiPress(_ sender: UIButton, event: UIEvent) {
     guard let originalKey = sender.layer.value(forKey: "original") as? String else { return }
     let touch: UITouch = event.allTouches!.first!
@@ -220,122 +214,12 @@ class KeyboardViewController: UIInputViewController {
       loadKeys()
     }
   }
-  
-  @objc func deleteLongPressed(_ gesture: UIGestureRecognizer) {
-    // delete will be speed up base on the number of deletes that have been completed
-    var deleteCount = 0
-    if gesture.state == .began {
-      backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) {
-        (_) in
-        deleteCount += 1
-        proxy.deleteBackward()
-        
-        if deleteCount == 5 {
-          backspaceTimer?.invalidate()
-          backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.07, repeats: true) {
-            (_) in
-            deleteCount += 1
-            proxy.deleteBackward()
-            
-            if deleteCount == 20 {
-              backspaceTimer?.invalidate()
-              backspaceTimer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) {
-                (_) in
-                proxy.deleteBackward()
-              }
-            }
-          }
-        }
-      }
-    } else if gesture.state == .ended || gesture.state == .cancelled {
-      backspaceTimer?.invalidate()
-      backspaceTimer = nil
-      if let button = gesture.view as? UIButton {
-        button.backgroundColor = specialKeyColor
-        styleDeleteButton(button, isPressed: false)
-      }
-    }
-  }
-  
-  // set command bar
+
   func loadCommandKeys() {
     for i in 0..<EnglishKeyboardConstants.commandKeys.count {
-      let btn = KeyboardKey(type: .custom)
+      let btn = CommandKey(type: .custom)
       btn.style()
-      var configuration = UIButton.Configuration.plain()
-      if i == 0 {  // coding language
-        configuration.attributedTitle = AttributedString("C++", attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 1,
-            green: 1,
-            blue: 1,
-            alpha: 1.0),
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
-        ]))
-        btn.backgroundColor = .systemPink
-      } else if i == EnglishKeyboardConstants.commandKeys.count - 1 { // delete
-        styleDeleteButton(btn, isPressed: false)
-        let deleteLongPressRecongizer = UILongPressGestureRecognizer(target: self, action: #selector(deleteLongPressed(_:)))
-        btn.addGestureRecognizer(deleteLongPressRecongizer)
-        btn.backgroundColor = specialKeyColor
-        btn.layer.setValue("delete", forKey: "original")
-        btn.layer.setValue("delete", forKey: "keyToDisplay")
-        btn.layer.setValue(true, forKey: "isSpecial")
-      } else {
-        if commandState == .idle {
-          let r1 = EnglishKeyboardConstants.commandKeys[i][0]
-          let r2 = EnglishKeyboardConstants.commandKeys[i][1]
-          configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
-          ]))
-          configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
-          ]))
-          btn.layer.setValue(baseKeySet[i], forKey: "original")
-          btn.layer.setValue(baseKeySet[i], forKey: "keyToDisplay")
-          btn.layer.setValue(false, forKey: "isSpecial")
-        } else {
-          var str = ""
-          switch commandState {
-          case .colon:
-            str = keySet0[i]
-            break
-          case .leftPa:
-            str = keySet1[i]
-            break
-          case .rightPa:
-            str = keySet2[i]
-            break
-          case .line:
-            str = keySet3[i]
-            break
-          default:
-            break
-          }
-          configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
-            NSAttributedString.Key.foregroundColor: UIColor(
-              red: 20/255.0,
-              green: 20/255.0,
-              blue: 20/255.0,
-              alpha: 1.0),
-            NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
-          ]))
-          btn.layer.setValue(str, forKey: "original")
-          btn.layer.setValue(str, forKey: "keyToDisplay")
-          btn.layer.setValue(false, forKey: "isSpecial")
-        }
-      }
-      btn.configuration = configuration
+      btn.setConfig(idx: i)
       btn.widthAnchor.constraint(equalToConstant: commandKeyWidth).isActive = true
       activateBtn(btn: btn)
       keyboardKeys.append(btn)
@@ -346,42 +230,10 @@ class KeyboardViewController: UIInputViewController {
   func loadNumberKeys() {
     // set the numbers line
     for i in 0..<EnglishKeyboardConstants.numbersAndSymbols.count {
-      let btn = KeyboardKey(type: .custom)
+      let btn = NumberKey(type: .custom)
       btn.style()
-      var configuration = UIButton.Configuration.plain()
-      var r1 = EnglishKeyboardConstants.numbersAndSymbols[i][0]
-      var r2 = EnglishKeyboardConstants.numbersAndSymbols[i][1]
-      
-      if shiftButtonState != .normal {
-        let temp = r1;
-        r1 = r2;
-        r2 = temp
-      }
-      
-      configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
-        NSAttributedString.Key.foregroundColor: UIColor(
-          red: 100/255.0,
-          green: 100/255.0,
-          blue: 100/255.0,
-          alpha: 0.9),
-        NSAttributedString.Key.font: UIFont(name: "Menlo", size: 12)!
-      ]))
-      configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
-        NSAttributedString.Key.foregroundColor: UIColor(
-          red: 20/255.0,
-          green: 20/255.0,
-          blue: 20/255.0,
-          alpha: 1.0),
-        NSAttributedString.Key.font: UIFont(name: "Menlo", size: 16)!
-      ]))
-      configuration.titleAlignment = .center
-      btn.configuration = configuration
+      btn.setConfig(idx: i)
       btn.widthAnchor.constraint(equalToConstant: letterKeyWidth).isActive = true
-      
-      btn.layer.setValue(r2, forKey: "original")
-      btn.layer.setValue(r2, forKey: "keyToDisplay")
-      btn.layer.setValue(false, forKey: "isSpecial")
-      
       activateBtn(btn: btn)
       keyboardKeys.append(btn)
       stackView2.addArrangedSubview(btn)
