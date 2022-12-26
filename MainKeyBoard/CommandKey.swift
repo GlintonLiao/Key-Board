@@ -61,16 +61,12 @@ class CommandKey: UIButton {
         switch commandState {
         case .colon:
           str = keySet0[idx]
-          break
         case .leftPa:
           str = keySet1[idx]
-          break
         case .rightPa:
           str = keySet2[idx]
-          break
         case .line:
           str = keySet3[idx]
-          break
         default:
           break
         }
@@ -98,6 +94,34 @@ class CommandKey: UIButton {
     self.layer.shadowOpacity = 1.0
     self.layer.shadowRadius = 0.0
     self.layer.masksToBounds = false
+  }
+  
+  @objc func handleSwipe(_ gesture: UIPanGestureRecognizer) {
+    if gesture.state == .ended {
+      let trans = gesture.translation(in: gesture.view)
+      var direction = 0
+      // compress direction
+      direction |= (trans.x > 0 ? 1 : 0) << 1
+      direction |= (trans.y > 0 ? 1 : 0)
+      switch direction {
+      case 0:
+        print("left up")
+      case 1:
+        print("left down")
+      case 2:
+        print("right up")
+      case 3:
+        print("right down")
+      default:
+        break
+      }
+      self.backgroundColor = keyColor
+    }
+  }
+  
+  func addSwipeGesture() {
+    let swipeGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+    self.addGestureRecognizer(swipeGesture)
   }
 
   @objc func deleteLongPressed(_ gesture: UIGestureRecognizer) {

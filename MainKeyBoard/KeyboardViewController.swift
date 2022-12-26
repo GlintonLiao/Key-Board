@@ -230,6 +230,7 @@ class KeyboardViewController: UIInputViewController {
       let btn = CommandKey(type: .custom)
       btn.style()
       btn.setConfig(idx: i)
+      btn.addSwipeGesture()
       btn.widthAnchor.constraint(equalToConstant: commandKeyWidth).isActive = true
       activateBtn(btn: btn)
       keyboardKeys.append(btn)
@@ -238,7 +239,6 @@ class KeyboardViewController: UIInputViewController {
   }
   
   func loadNumberKeys() {
-    // set the numbers line
     for i in 0..<EnglishKeyboardConstants.numbersAndSymbols.count {
       let btn = NumberKey(type: .custom)
       btn.style()
