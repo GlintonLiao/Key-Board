@@ -132,8 +132,8 @@ public enum EnglishKeyboardConstants {
 }
 
 let keySet0 = ["", "|", "\\", "\"", "'"]
-let keySet1 = ["", "<", "(", "[", "{"]
-let keySet2 = ["", ">", ")", "]", "}"]
+let keySet1 = ["", "<", "(", "{", "["]
+let keySet2 = ["", ">", ")", "}", "]"]
 let keySet3 = ["", "_", "-", "+", "="]
 let baseKeySet = ["", "colon", "leftPa", "rightPa", "line"]
   

@@ -10,6 +10,8 @@ import UIKit
 
 class CommandKey: UIButton {
   
+  var keys = [String]()
+  
   func setConfig(idx: Int) {
     var configuration = UIButton.Configuration.plain()
     switch idx {
@@ -35,6 +37,18 @@ class CommandKey: UIButton {
       
     default:
       if commandState == .idle {
+        switch idx {
+        case 1:
+          self.keys = keySet0
+        case 2:
+          self.keys = keySet1
+        case 3:
+          self.keys = keySet2
+        case 4:
+          self.keys = keySet3
+        default:
+          break
+        }
         let r1 = EnglishKeyboardConstants.commandKeys[idx][0]
         let r2 = EnglishKeyboardConstants.commandKeys[idx][1]
         configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
@@ -98,23 +112,25 @@ class CommandKey: UIButton {
   
   @objc func handleSwipe(_ gesture: UIPanGestureRecognizer) {
     if gesture.state == .ended {
+      if commandState != .idle || keys.isEmpty { return }
       let trans = gesture.translation(in: gesture.view)
       var direction = 0
       // compress direction
       direction |= (trans.x > 0 ? 1 : 0) << 1
       direction |= (trans.y > 0 ? 1 : 0)
-      switch direction {
-      case 0:
-        print("left up")
-      case 1:
-        print("left down")
-      case 2:
-        print("right up")
-      case 3:
-        print("right down")
-      default:
-        break
-      }
+      proxy.insertText(keys[direction + 1])
+//      switch direction {
+//      case 0:
+//        print("left up")
+//      case 1:
+//        print("left down")
+//      case 2:
+//        print("right up")
+//      case 3:
+//        print("right down")
+//      default:
+//        break
+//      }
       self.backgroundColor = keyColor
     }
   }
