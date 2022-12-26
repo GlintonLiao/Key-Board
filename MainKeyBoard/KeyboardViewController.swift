@@ -117,6 +117,7 @@ class KeyboardViewController: UIInputViewController {
   func activateBtn(btn: UIButton) {
     btn.addTarget(self, action: #selector(executeKeyActions), for: .touchUpInside)
     btn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
+    btn.addTarget(self, action: #selector(keyUntouched), for: .touchDragExit)
     btn.isUserInteractionEnabled = true
   }
   
@@ -204,6 +205,15 @@ class KeyboardViewController: UIInputViewController {
     }
   }
   
+  /// Resets key coloration after they have been changed to keyPressedColor.
+  ///
+  /// - Parameters
+  ///   - sender: the key that was pressed.
+  @objc func keyUntouched(_ sender: UIButton) {
+    guard let isSpecial = sender.layer.value(forKey: "isSpecial") as? Bool else { return }
+    sender.backgroundColor = isSpecial ? specialKeyColor : keyColor
+  }
+  
   @objc func keyMultiPress(_ sender: UIButton, event: UIEvent) {
     guard let originalKey = sender.layer.value(forKey: "original") as? String else { return }
     let touch: UITouch = event.allTouches!.first!
@@ -233,6 +243,7 @@ class KeyboardViewController: UIInputViewController {
       let btn = NumberKey(type: .custom)
       btn.style()
       btn.setConfig(idx: i)
+      btn.addSwipeGesture()
       btn.widthAnchor.constraint(equalToConstant: letterKeyWidth).isActive = true
       activateBtn(btn: btn)
       keyboardKeys.append(btn)

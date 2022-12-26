@@ -10,18 +10,21 @@ import UIKit
 
 class NumberKey: UIButton {
   
+  var r1 = String()
+  var r2 = String()
+  
   func setConfig(idx: Int) {
     var configuration = UIButton.Configuration.plain()
-    var r1 = EnglishKeyboardConstants.numbersAndSymbols[idx][0]
-    var r2 = EnglishKeyboardConstants.numbersAndSymbols[idx][1]
+    self.r1 = EnglishKeyboardConstants.numbersAndSymbols[idx][0]
+    self.r2 = EnglishKeyboardConstants.numbersAndSymbols[idx][1]
     
     if shiftButtonState != .normal {
-      let temp = r1;
-      r1 = r2;
-      r2 = temp
+      let temp = self.r1;
+      self.r1 = self.r2;
+      self.r2 = temp
     }
     
-    configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
+    configuration.attributedTitle = AttributedString(self.r1, attributes: AttributeContainer([
       NSAttributedString.Key.foregroundColor: UIColor(
         red: 100/255.0,
         green: 100/255.0,
@@ -29,7 +32,7 @@ class NumberKey: UIButton {
         alpha: 0.9),
       NSAttributedString.Key.font: UIFont(name: "Menlo", size: 12)!
     ]))
-    configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
+    configuration.attributedSubtitle = AttributedString(self.r2, attributes: AttributeContainer([
       NSAttributedString.Key.foregroundColor: UIColor(
         red: 20/255.0,
         green: 20/255.0,
@@ -40,8 +43,8 @@ class NumberKey: UIButton {
     configuration.titleAlignment = .center
     self.configuration = configuration
     
-    self.layer.setValue(r2, forKey: "original")
-    self.layer.setValue(r2, forKey: "keyToDisplay")
+    self.layer.setValue(self.r2, forKey: "original")
+    self.layer.setValue(self.r2, forKey: "keyToDisplay")
     self.layer.setValue(false, forKey: "isSpecial")
   }
   
@@ -53,5 +56,16 @@ class NumberKey: UIButton {
     self.layer.shadowOpacity = 1.0
     self.layer.shadowRadius = 0.0
     self.layer.masksToBounds = false
+  }
+  
+  @objc func handleSwipeUp(_ gestureRecognizer: UISwipeGestureRecognizer) {
+    proxy.insertText(self.r1)
+    self.backgroundColor = keyColor
+  }
+  
+  func addSwipeGesture() {
+    let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp(_:)))
+    swipeGesture.direction = .up
+    self.addGestureRecognizer(swipeGesture)
   }
 }
