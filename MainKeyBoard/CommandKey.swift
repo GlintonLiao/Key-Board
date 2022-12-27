@@ -112,25 +112,16 @@ class CommandKey: UIButton {
   
   @objc func handleSwipe(_ gesture: UIPanGestureRecognizer) {
     if gesture.state == .ended {
-      if commandState != .idle || keys.isEmpty { return }
+      if commandState != .idle || keys.isEmpty {
+        self.backgroundColor = keyColor
+        return
+      }
       let trans = gesture.translation(in: gesture.view)
       var direction = 0
       // compress direction
       direction |= (trans.x > 0 ? 1 : 0) << 1
       direction |= (trans.y > 0 ? 1 : 0)
       proxy.insertText(keys[direction + 1])
-//      switch direction {
-//      case 0:
-//        print("left up")
-//      case 1:
-//        print("left down")
-//      case 2:
-//        print("right up")
-//      case 3:
-//        print("right down")
-//      default:
-//        break
-//      }
       self.backgroundColor = keyColor
     }
   }

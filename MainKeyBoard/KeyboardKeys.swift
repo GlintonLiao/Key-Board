@@ -53,7 +53,8 @@ class KeyboardKey: UIButton {
         && self.key != "space"
         && self.key != ";"
         && self.key != ","
-        && self.key != "." {
+        && self.key != "."
+        && self.key != "selectKeyBoard"{
       capsKey = keyboard[self.row][self.idx].capitalized
     } else {
       capsKey = self.key
@@ -124,10 +125,12 @@ class KeyboardKey: UIButton {
       self.layer.setValue(true, forKey: "isSpecial")
       self.widthAnchor.constraint(equalToConstant: keyWidth * 2 + keyWidth / 0.875 * 0.125).isActive = true
     } else if self.key == "delete"
-      || self.key == "shift"
-      || self.key == "selectKeyboard" {
+      || self.key == "shift" {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: keyWidth * 2 + keyWidth / 0.875 * 0.125).isActive = true
+    } else if self.key == "selectKeyboard" {
+      self.layer.setValue(true, forKey: "isSpecial")
+      self.widthAnchor.constraint(equalToConstant: keyWidth * 1 + keyWidth / 0.875 * 0.125).isActive = true
     } else if self.key == "return" {
         self.layer.setValue(true, forKey: "isSpecial")
         self.widthAnchor.constraint(equalToConstant: keyWidth * 2 + keyWidth / 0.875 * 0.125).isActive = true

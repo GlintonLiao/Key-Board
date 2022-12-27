@@ -49,6 +49,7 @@ class KeyboardViewController: UIInputViewController {
     keyboardView = keyBoardNib.instantiate(withOwner: self, options: nil)[0] as? UIView
     keyboardView.translatesAutoresizingMaskIntoConstraints = true
     view.addSubview(keyboardView)
+    loadKeys()
   }
   
   func setAutoPartition() {
@@ -271,6 +272,8 @@ class KeyboardViewController: UIInputViewController {
     
     loadCommandKeys()
     loadNumberKeys()
+    setAutoPartition()
+    setAutoSuggestion()
     
     let numRows = letterKeys.count
     keyboard = letterKeys
@@ -290,6 +293,16 @@ class KeyboardViewController: UIInputViewController {
         
         if btn.key == "shift" {
           btn.addTarget(self, action: #selector(keyMultiPress(_:event:)), for: .touchDownRepeat)
+        }
+        
+        if btn.key == "selectKeyboard" {
+          self.nextKeyboardButton = btn
+          self.nextKeyboardButton.addTarget(
+            self,
+            action: #selector(handleInputModeList(from:with:)),
+            for: .allTouchEvents
+          )
+          styleIconBtn(btn: btn, color: keyCharColor, iconName: "globe")
         }
         
         switch row {
@@ -337,29 +350,35 @@ class KeyboardViewController: UIInputViewController {
       super.viewDidLoad()
 
       proxy = textDocumentProxy as UITextDocumentProxy
+      keyboardLoad = true
       loadInterface()
-      loadKeys()
-      setAutoPartition()
-      setAutoSuggestion()
-      
-      // Perform custom UI setup here
-      self.nextKeyboardButton = UIButton(type: .system)
-
-      self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
-      self.nextKeyboardButton.sizeToFit()
-      self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
+      keyboardLoad = false
 
       self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
-
-      self.view.addSubview(self.nextKeyboardButton)
-
-      self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-      self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+  
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      updateViewConstraints()
+      keyboardLoad = true
+      loadKeys()
+      keyboardLoad = false
+    }
+  
+    /// Includes:
+    /// - updateViewConstraints to change the keyboard height
+    /// - A call to loadKeys to reload the display after an orientation change
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+      super.viewWillTransition(to: size, with: coordinator)
+      updateViewConstraints()
+      keyboardLoad = true
+      loadKeys()
+      keyboardLoad = false
     }
     
     override func viewWillLayoutSubviews() {
-        self.nextKeyboardButton.isHidden = !self.needsInputModeSwitchKey
-        super.viewWillLayoutSubviews()
+      self.nextKeyboardButton.isHidden = !self.needsInputModeSwitchKey
+      super.viewWillLayoutSubviews()
     }
     
     override func textWillChange(_ textInput: UITextInput?) {

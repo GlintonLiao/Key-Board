@@ -27,6 +27,7 @@ var keyWidth = CGFloat(0)
 var letterKeyWidth = CGFloat(0)
 var commandKeyWidth = CGFloat(0)
 var keyboardLoad = false
+var needsInputSwitch = false
 
 // Keyboard elements.
 var spaceBar = String()
@@ -119,7 +120,7 @@ public enum EnglishKeyboardConstants {
     ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     ["a", "s", "d", "f", "g", "h", "j", "k", "l", ":"],
     ["shift", "z", "x", "c", "v", "b", "n", "m", ";"],
-    ["tab", ",", "space", ".", "return"]
+    ["selectKeyboard", "tab", ",", "space", ".", "return"]
   ]
   
   static let commandKeys = [
