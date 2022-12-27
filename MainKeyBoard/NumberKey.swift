@@ -18,6 +18,7 @@ class NumberKey: UIButton {
     self.r1 = EnglishKeyboardConstants.numbersAndSymbols[idx][0]
     self.r2 = EnglishKeyboardConstants.numbersAndSymbols[idx][1]
     
+    // swap char if shifted
     if shiftButtonState != .normal {
       let temp = self.r1;
       self.r1 = self.r2;

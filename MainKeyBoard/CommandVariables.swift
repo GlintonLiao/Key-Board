@@ -27,10 +27,6 @@ var currentPrefix: String = ""
 var pastStringInTextProxy: String = ""
 var completionWords = [String]()
 
-// A larger vertical bar than the normal | key for the cursor.
-let commandCursor: String = "│"
-var commandPromptSpacing: String = ""
-
 // Command input and output variables.
 var inputWordIsCapitalized: Bool = false
 var wordToReturn: String = ""

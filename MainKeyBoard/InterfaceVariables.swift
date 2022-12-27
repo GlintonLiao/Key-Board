@@ -15,7 +15,6 @@ var proxy: UITextDocumentProxy!
 
 // Variables for the keyboard and its appearance.
 var keyboard: [[String]] = [[String]]()
-var allKeys: [String] = [String]()
 let specialKeys = [
   "shift", "delete", "selectKeyboard", "space", "return", "tab"
 ]
@@ -28,9 +27,6 @@ var letterKeyWidth = CGFloat(0)
 var commandKeyWidth = CGFloat(0)
 var keyboardLoad = false
 var needsInputSwitch = false
-
-// Keyboard elements.
-var spaceBar = String()
 
 // Arrays for the possible keyboard views that are loaded with their characters.
 var letterKeys: [[String]] = [[String]]()
@@ -61,17 +57,10 @@ enum CommandState {
   case line
 }
 
-/// States of the keyboard corresponding to which auto actions should be presented.
-enum AutoActionState {
-  case complete
-  case suggest
-}
-
 // Baseline state variables.
 var keyboardState: KeyboardState = .letters
 var shiftButtonState: ShiftButtonState = .normal
 var commandState: CommandState = .idle
-var autoActionState: AutoActionState = .suggest
 
 // Variables and functions to determine display parameters.
 struct DeviceType {
@@ -88,28 +77,6 @@ func checkLandscapeMode() {
     isLandscapeView = false
   }
 }
-
-// Variables that define which keys are positioned on the very left, right or in the center of the keyboard.
-// The purpose of these is to define which key pop up functions should be ran.
-var centralKeyChars: [String] = [String]()
-var leftKeyChars: [String] = [String]()
-var rightKeyChars: [String] = [String]()
-
-// Variables for call out positioning.
-var horizStart = CGFloat(0)
-var vertStart = CGFloat(0)
-var widthMultiplier = CGFloat(0)
-var maxHeightMultiplier = CGFloat(0)
-var maxHeight = CGFloat(0)
-var heightBeforeTopCurves = CGFloat(0)
-var maxWidthCurveControl = CGFloat(0)
-var maxHeightCurveControl = CGFloat(0)
-var minHeightCurveControl = CGFloat(0)
-
-var keyPopChar = UILabel()
-var keyHoldPopChar = UILabel()
-var keyPopLayer = CAShapeLayer()
-var keyHoldPopLayer = CAShapeLayer()
 
 // MARK: English Interface Variables
 // Note: here only until there is an English keyboard.
@@ -137,21 +104,3 @@ let keySet1 = ["", "<", "(", "{", "["]
 let keySet2 = ["", ">", ")", "}", "]"]
 let keySet3 = ["", "_", "-", "+", "="]
 let baseKeySet = ["", "colon", "leftPa", "rightPa", "line"]
-  
-/// Gets the keys for the English keyboard.
-func getENKeys() {
-  letterKeys = EnglishKeyboardConstants.lettersKeys
-  commandKeys = EnglishKeyboardConstants.commandKeys
-  allKeys = Array(letterKeys.joined())  + Array(numberKeys.joined()) + Array(commandKeys.joined())
-  
-  leftKeyChars = ["q", "1", "a"]
-  rightKeyChars = ["p", "0", ":", ";"]
-  centralKeyChars = allKeys.filter { !leftKeyChars.contains($0) && !rightKeyChars.contains($0) }
-}
-
-/// Provides an English keyboard layout.
-func setENKeyboardLayout() {
-  getENKeys()
-  spaceBar = "space"
-  baseAutosuggestions = ["int", "void", "string"]
-}

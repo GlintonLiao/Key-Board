@@ -31,8 +31,6 @@ func styleBtn(btn: UIButton, title: String, radius: CGFloat) {
 // The names of symbols whose keys should be slightly larger than the default size.
 var keysThatAreSlightlyLarger: [String] = [
   "delete.left",
-  "chevron.left",
-  "chevron.right",
   "shift",
   "shift.fill",
   "capslock.fill",
@@ -99,21 +97,4 @@ func styleDeleteButton(_ button: UIButton, isPressed: Bool) {
     styleIconBtn(btn: button, color: keyCharColor,
                  iconName: isPressed ? "xmark.circle.fill" : "xmark.circle")
   }
-}
-
-/// Adds padding to keys to position them.
-///
-/// - Parameters
-///  - to: the stackView in which the button is found.
-///  - width: the width of the padding.
-///  - key: the key associated with the button.
-func addPadding(to stackView: UIStackView, width: CGFloat, key: String) {
-  let padding = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-  padding.setTitleColor(.clear, for: .normal)
-  padding.alpha = 0.0
-  padding.widthAnchor.constraint(equalToConstant: width).isActive = true
-  padding.isUserInteractionEnabled = false
-
-  paddingViews.append(padding)
-  stackView.addArrangedSubview(padding)
 }
