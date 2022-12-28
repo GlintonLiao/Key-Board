@@ -10,31 +10,17 @@ import UIKit
 class ViewController: UIViewController {
   // Variables linked to elements in AppScreen.storyboard.
   @IBOutlet weak var appTextView: UITextView!
-  @IBOutlet weak var appTextBackground: UIView!
 
+  @IBOutlet weak var switchLangBtn: UIButton!
   @IBOutlet weak var settingsBtn: UIButton!
-  @IBOutlet weak var topIconPhone: UIImageView!
-  @IBOutlet weak var settingsCorner: UIImageView!
-
-  @IBOutlet weak var GHTextView: UITextView!
-  @IBOutlet weak var GHTextBackground: UIView!
-
-  @IBOutlet weak var GHBtn: UIButton!
-  @IBOutlet weak var GHCorner: UIImageView!
-
-  @IBOutlet weak var privacyTextBackground: UIView!
-  @IBOutlet weak var privacyTextView: UITextView!
-  @IBOutlet weak var privacyScroll: UIImageView!
-
-  @IBOutlet weak var switchView: UIButton!
-  @IBOutlet weak var switchViewBackground: UIView!
-  var displayPrivacyPolicy = false
-
+  
   // Spacing views to size app screen proportionally.
   @IBOutlet weak var topSpace: UIView!
-  @IBOutlet weak var logoSpace: UIView!
-  @IBOutlet weak var svSpace: UIView!
   @IBOutlet weak var bottomSpace: UIView!
+  
+  // gaps
+  @IBOutlet weak var textGap: UIView!
+  @IBOutlet weak var btnGap: UIView!
 
   /// Includes a call to checkDarkModeSetColors to set brand colors and a call to set the UI for the app screen.
   override func viewDidLoad() {
@@ -78,30 +64,21 @@ class ViewController: UIViewController {
     return .lightContent
   }
 
-  let switchViewColor = UIColor(red: 241.0/255.0, green: 204.0/255.0, blue: 131.0/255.0, alpha: 1.0)
+  let switchLangColor = UIColor(red: 241.0/255.0, green: 204.0/255.0, blue: 131.0/255.0, alpha: 1.0)
   /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
-  func setSwitchViewBtn() {
-    if displayPrivacyPolicy == false {
-      switchView.setTitle("View Privacy Policy", for: .normal)
-    } else if displayPrivacyPolicy == true {
-      switchView.setTitle("View Installation", for: .normal)
-    }
-    switchView.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-    switchView.setTitleColor(.init(.keyChar).light, for: .normal)
-    switchView.titleLabel?.font = .systemFont(ofSize: fontSize * 1.5)
+  func setSwitchLangBtn() {
+    switchLangBtn.setTitle("Current Language: C++", for: .normal)
+    switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+    switchLangBtn.setTitleColor(.init(.keyChar).light, for: .normal)
+    switchLangBtn.titleLabel?.font = .systemFont(ofSize: fontSize * 1.5)
 
-    switchView.clipsToBounds = true
-    switchView.backgroundColor = switchViewColor
-    applyCornerRadius(elem: switchView, radius: switchView.frame.height * 0.35)
-    applyShadowEffects(elem: switchView)
+    switchLangBtn.clipsToBounds = true
+    switchLangBtn.backgroundColor = switchLangColor
+    applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.35)
+    applyShadowEffects(elem: switchLangBtn)
 
-    switchView.addTarget(self, action: #selector(switchAppView), for: .touchUpInside)
-    switchView.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
-
-    // Add a white background so that the key press doesn't show the blue app screen background.
-    switchViewBackground.backgroundColor = .white
-    switchViewBackground.clipsToBounds = true
-    applyCornerRadius(elem: switchViewBackground, radius: switchView.frame.height * 0.35)
+    switchLangBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
+    switchLangBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
   }
 
   /// Sets the functionality of the button over the keyboard installation guide that opens Settings.
@@ -110,171 +87,58 @@ class ViewController: UIViewController {
     settingsBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
   }
 
-  /// Sets the functionality of the button over the keyboard installation guide that links to Scribe's GitHub.
-  func setGHBtn() {
-    GHBtn.addTarget(self, action: #selector(openScribeGH), for: .touchUpInside)
-    GHBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
-  }
-
   /// Sets constant properties for the app screen.
   func setUIConstantProperties() {
-    // Set the scroll bar so that it appears on a white background regardless of light or dark mode.
-    let scrollbarAppearance = UINavigationBarAppearance()
-    scrollbarAppearance.configureWithOpaqueBackground()
-    privacyScroll.isUserInteractionEnabled = false
-
     // Disable spacing views.
-    let allSpacingViews: [UIView] = [topSpace, logoSpace, svSpace, bottomSpace]
+    let allSpacingViews: [UIView] = [topSpace, textGap, btnGap, bottomSpace]
     for view in allSpacingViews {
       view.isUserInteractionEnabled = false
       view.backgroundColor = .clear
     }
-
-    topIconPhone.tintColor = .white
   }
 
   /// Sets properties for the app screen given the current device.
   func setUIDeviceProperties() {
     // Height ratios to set corner radii exactly.
-    let installTextToSwitchBtnHeightRatio = appTextBackground.frame.height / switchViewBackground.frame.height
-    let GHTextToSwitchBtnHeightRatio = GHTextBackground.frame.height / switchViewBackground.frame.height
-    let privacyTextToSwitchBtnHeightRatio = privacyTextBackground.frame.height / switchViewBackground.frame.height
-
-    settingsCorner.layer.maskedCorners = .layerMaxXMinYCorner
-    settingsCorner.layer.cornerRadius = appTextBackground.frame.height * 0.4 / installTextToSwitchBtnHeightRatio
-    settingsCorner.alpha = 0.9
-    GHCorner.layer.maskedCorners = .layerMaxXMinYCorner
-    GHCorner.layer.cornerRadius = GHTextBackground.frame.height * 0.4 / GHTextToSwitchBtnHeightRatio
-    GHCorner.alpha = 0.9
+//    let installTextToSwitchBtnHeightRatio = appTextBackground.frame.height / switchViewBackground.frame.height
 
     settingsBtn.clipsToBounds = true
     settingsBtn.layer.masksToBounds = false
-    settingsBtn.layer.cornerRadius = appTextBackground.frame.height * 0.4 / installTextToSwitchBtnHeightRatio
-    GHBtn.clipsToBounds = true
-    GHBtn.layer.masksToBounds = false
-    GHBtn.layer.cornerRadius = GHTextBackground.frame.height * 0.4 / GHTextToSwitchBtnHeightRatio
-
-    let allTextViews: [UITextView] = [appTextView, GHTextView, privacyTextView]
+//    settingsBtn.layer.cornerRadius = appTextBackground.frame.height * 0.4 / installTextToSwitchBtnHeightRatio
 
     // Disable text views.
-    for textView in allTextViews {
-      textView.isUserInteractionEnabled = false
-      textView.backgroundColor = .clear
-      textView.isEditable = false
-    }
+    appTextView.isUserInteractionEnabled = false
+    appTextView.backgroundColor = .clear
+    appTextView.isEditable = false
 
-    // Set backgrounds and corner radii.
-    appTextBackground.isUserInteractionEnabled = false
-    appTextBackground.clipsToBounds = true
-    applyCornerRadius(
-      elem: appTextBackground,
-      radius: appTextBackground.frame.height * 0.4 / installTextToSwitchBtnHeightRatio
-    )
-
-    GHTextBackground.isUserInteractionEnabled = false
-    GHTextBackground.clipsToBounds = true
-    applyCornerRadius(
-      elem: GHTextBackground,
-      radius: GHTextBackground.frame.height * 0.4 / GHTextToSwitchBtnHeightRatio
-    )
-
-    privacyTextView.backgroundColor = .clear
-    applyCornerRadius(
-      elem: privacyTextBackground,
-      radius: privacyTextBackground.frame.height * 0.4 / privacyTextToSwitchBtnHeightRatio
-    )
-
-    // Set link attributes for all textViews.
-    for textView in allTextViews {
-      textView.linkTextAttributes = [
-        NSAttributedString.Key.foregroundColor: UIColor(.annotateBlue).light,
-        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-      ]
-    }
+    // Set link attributes for the textView.
+    appTextView.linkTextAttributes = [
+      NSAttributedString.Key.foregroundColor: UIColor(.annotateBlue).light,
+      NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
+    ]
   }
 
   /// Sets the necessary properties for the installation UI including calling text generation functions.
   func setInstallationUI() {
     let settingsSymbol: UIImage = getSettingsSymbol(fontSize: fontSize)
-    topIconPhone.image = settingsSymbol
 
     // Enable installation directions and GitHub notice elements.
     settingsBtn.isUserInteractionEnabled = true
-    appTextBackground.backgroundColor = .white
-    applyShadowEffects(elem: appTextBackground)
-
-    GHBtn.isUserInteractionEnabled = true
-    GHCorner.isHidden = false
-    GHTextBackground.backgroundColor = .white
-    applyShadowEffects(elem: GHTextBackground)
-
-    // Disable the privacy policy elements.
-    privacyTextView.isUserInteractionEnabled = false
-    privacyTextView.backgroundColor = .clear
-    privacyTextView.text = ""
-    privacyTextBackground.backgroundColor = .clear
-
-    privacyScroll.isHidden = true
 
     // Set the texts for the fields.
     appTextView.attributedText = setENInstallation(fontSize: fontSize)
     appTextView.textColor = .init(.keyChar).light
-
-    GHTextView.attributedText = setENGitHubText(fontSize: fontSize)
-    GHTextView.textColor = .init(.keyChar).light
-  }
-
-  /// Sets the necessary properties for the privacy policy UI including calling the text generation function.
-  func setPrivacyUI() {
-    let privacySymbol: UIImage = getPrivacySymbol(fontSize: fontSize)
-    topIconPhone.image = privacySymbol
-
-    // Disable installation directions and GitHub notice elements.
-    settingsBtn.isUserInteractionEnabled = false
-    appTextView.text = ""
-    appTextBackground.backgroundColor = .clear
-
-    GHBtn.isUserInteractionEnabled = false
-    GHCorner.isHidden = true
-    GHTextView.text = ""
-    GHTextBackground.backgroundColor = .clear
-
-    // Enable the privacy policy elements.
-    privacyTextView.isUserInteractionEnabled = true
-    privacyTextBackground.backgroundColor = .white
-    applyShadowEffects(elem: privacyTextBackground)
-
-    privacyScroll.isHidden = false
-
-    privacyTextView.attributedText = setENPrivacyPolicy(fontSize: fontSize)
-    privacyTextView.textColor = .init(.keyChar).light
   }
 
   /// Creates the current app UI by applying constraints and calling child UI functions.
   func setCurrentUI() {
     // Set the font size and all button elements.
     setFontSize()
-    setSwitchViewBtn()
+    setSwitchLangBtn()
     setSettingsBtn()
-    setGHBtn()
     setUIConstantProperties()
     setUIDeviceProperties()
-
-    if displayPrivacyPolicy == false {
-      setInstallationUI()
-    } else {
-      setPrivacyUI()
-    }
-  }
-
-  /// Switches the view of the app based on the current view.
-  @objc func switchAppView() {
-    if displayPrivacyPolicy == false {
-      displayPrivacyPolicy = true
-    } else {
-      displayPrivacyPolicy = false
-    }
-    setCurrentUI()
+    setInstallationUI()
   }
 
   /// Function to open the settings app that is targeted by settingsBtn.
@@ -282,42 +146,29 @@ class ViewController: UIViewController {
     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
   }
 
-  /// Function to open Scribe's GitHub page that is targeted by GHBtn.
-  @objc func openScribeGH() {
-    guard let url = URL(string: "https://github.com/scribe-org/Scribe-iOS") else {
-      return
-    }
-
-    if #available(iOS 10.0, *) {
-      UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    } else {
-      UIApplication.shared.openURL(url)
-    }
-  }
-
   /// Function to change the key coloration given a touch down.
   ///
   /// - Parameters
   ///  - sender: the button that has been pressed.
   @objc func keyTouchDown(_ sender: UIButton) {
-    if sender == switchView {
-      sender.backgroundColor = .clear
-      sender.setTitleColor(switchViewColor, for: .normal)
-
-      // Bring sender's background and text colors back to their original values.
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [self] in
-        sender.backgroundColor = switchViewColor
-        sender.setTitleColor(.init(.keyChar).light, for: .normal)
-      }
-    } else {
-      sender.backgroundColor = .black
-      sender.alpha = 0.2
-
-      // Bring sender's opacity back up to fully opaque and replace the background color.
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-        sender.backgroundColor = .clear
-        sender.alpha = 1.0
-      }
-    }
+//    if sender == switchLang {
+//      sender.backgroundColor = .clear
+//      sender.setTitleColor(switchViewColor, for: .normal)
+//
+//      // Bring sender's background and text colors back to their original values.
+//      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [self] in
+//        sender.backgroundColor = switchViewColor
+//        sender.setTitleColor(.init(.keyChar).light, for: .normal)
+//      }
+//    } else {
+//      sender.backgroundColor = .black
+//      sender.alpha = 0.2
+//
+//      // Bring sender's opacity back up to fully opaque and replace the background color.
+//      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+//        sender.backgroundColor = .clear
+//        sender.alpha = 1.0
+//      }
+//    }
   }
 }
