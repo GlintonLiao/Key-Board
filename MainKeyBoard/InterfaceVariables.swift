@@ -33,11 +33,6 @@ var letterKeys: [[String]] = [[String]]()
 var numberKeys: [[String]] = [[String]]()
 var commandKeys: [[String]] = [[String]]()
 
-/// States of the keyboard corresponding to layouts found in KeyboardConstants.swift.
-enum KeyboardState {
-  case letters
-}
-
 /// What the keyboard state is in regards to the shift key.
 /// - normal: not capitalized
 /// - shift: capitalized
@@ -58,7 +53,6 @@ enum CommandState {
 }
 
 // Baseline state variables.
-var keyboardState: KeyboardState = .letters
 var shiftButtonState: ShiftButtonState = .normal
 var commandState: CommandState = .idle
 

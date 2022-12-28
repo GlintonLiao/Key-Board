@@ -1,0 +1,22 @@
+{
+"function": [
+"name",
+"foo",
+"func"
+],
+"int": [
+"max",
+"min",
+"string"
+],
+"static": [
+"void",
+"int",
+"string"
+],
+"(": [
+"int ",
+"string",
+")"
+],
+}

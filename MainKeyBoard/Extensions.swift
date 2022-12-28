@@ -46,14 +46,6 @@ extension String {
     return String(self[startIndex..<endIndex])
   }
 
-  func insertPriorToCursor(char: String) -> String {
-    return substring(toIdx: self.count - 1) + char + commandCursor
-  }
-
-  func deletePriorToCursor() -> String {
-    return substring(toIdx: self.count - 2) + commandCursor
-  }
-
   var isLowercase: Bool {
     return self == self.lowercased()
   }

@@ -122,6 +122,20 @@ class KeyboardViewController: UIInputViewController {
     btn.isUserInteractionEnabled = true
   }
   
+  @objc func openURL(_ url: URL) { return }
+
+  func openApp(_ urlstring:String) {
+    var responder: UIResponder? = self as UIResponder
+    let selector = #selector(openURL(_:))
+    while responder != nil {
+      if responder!.responds(to: selector) && responder != self {
+        responder!.perform(selector, with: URL(string: urlstring)!)
+        return
+      }
+      responder = responder?.next
+    }
+  }
+  
   @IBAction func executeKeyActions(_ sender: UIButton) {
     guard let originalKey = sender.layer.value(
       forKey: "original"
@@ -149,6 +163,9 @@ class KeyboardViewController: UIInputViewController {
         proxy.deleteBackward()
         loadKeys()
       }
+    
+    case "lang":
+      openApp("key-board-app://")
 
     case "space":
       proxy.insertText(" ")
@@ -200,6 +217,7 @@ class KeyboardViewController: UIInputViewController {
   // change style of btn when touchdown and up
   @objc func keyTouchDown(_ sender: UIButton) {
     guard let key = sender.layer.value(forKey: "original") as? String else { return }
+    if key == "lang" { return }
     sender.backgroundColor = keyPressedColor
     if key == "delete" {
       styleDeleteButton(sender, isPressed: true)

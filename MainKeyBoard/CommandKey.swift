@@ -25,6 +25,9 @@ class CommandKey: UIButton {
         NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
       ]))
       self.backgroundColor = .systemPink
+      self.layer.setValue("lang", forKey: "original")
+      self.layer.setValue("lang", forKey: "keyToDisplay")
+      self.layer.setValue(false, forKey: "isSpecial")
     
     case 5:
       styleDeleteButton(self, isPressed: false)
