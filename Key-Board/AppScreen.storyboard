@@ -103,7 +103,7 @@
                         <outlet property="bottomSpace" destination="SHS-hN-aPL" id="bO0-WS-LLg"/>
                         <outlet property="btnGap" destination="tUF-aZ-j0B" id="bgT-ZE-Hp3"/>
                         <outlet property="settingsBtn" destination="DWU-eF-8tl" id="XPb-6O-Qqs"/>
-                        <outlet property="switchView" destination="2QI-f0-YLj" id="prZ-tr-uvh"/>
+                        <outlet property="switchLangBtn" destination="2QI-f0-YLj" id="3wc-jq-v4l"/>
                         <outlet property="textGap" destination="SQe-UH-lSA" id="Vvs-Qt-yhC"/>
                         <outlet property="topSpace" destination="eyk-EK-raM" id="Xqt-JJ-RLp"/>
                     </connections>
