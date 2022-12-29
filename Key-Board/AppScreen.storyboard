@@ -29,7 +29,7 @@
                                 <color key="backgroundColor" systemColor="systemBrownColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DWU-eF-8tl" userLabel="OpenSetting">
-                                <rect key="frame" x="53.666666666666657" y="713.33333333333337" width="322.66666666666674" height="63"/>
+                                <rect key="frame" x="75.333333333333343" y="738.66666666666663" width="279.33333333333326" height="50.333333333333371"/>
                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal">
@@ -37,7 +37,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QI-f0-YLj" userLabel="SwitchLang">
-                                <rect key="frame" x="53.666666666666657" y="793" width="322.66666666666674" height="63"/>
+                                <rect key="frame" x="75.333333333333343" y="805.66666666666663" width="279.33333333333326" height="50.333333333333371"/>
                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal">
@@ -45,18 +45,18 @@
                                 </state>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="w88-X2-5bx" userLabel="AppTextView">
-                                <rect key="frame" x="53.666666666666657" y="101" width="322.66666666666674" height="595.66666666666663"/>
+                                <rect key="frame" x="75.333333333333343" y="101" width="279.33333333333326" height="620.66666666666663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUF-aZ-j0B" userLabel="BtnGap">
-                                <rect key="frame" x="0.0" y="776.33333333333337" width="430" height="16.666666666666629"/>
+                                <rect key="frame" x="0.0" y="789" width="430" height="16.666666666666629"/>
                                 <color key="backgroundColor" systemColor="systemBrownColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQe-UH-lSA" userLabel="TextGap">
-                                <rect key="frame" x="0.0" y="696.66666666666663" width="430" height="16.666666666666629"/>
+                                <rect key="frame" x="0.0" y="721.66666666666663" width="430" height="17"/>
                                 <color key="backgroundColor" systemColor="systemBrownColor"/>
                             </view>
                         </subviews>
@@ -70,7 +70,7 @@
                             <constraint firstItem="fV8-bd-sgm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="6Av-8u-CFx"/>
                             <constraint firstItem="fV8-bd-sgm" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="8Gi-Sj-3b0"/>
                             <constraint firstItem="eyk-EK-raM" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="8SI-nP-cSR"/>
-                            <constraint firstItem="2QI-f0-YLj" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.075" id="DKE-5U-8Ku"/>
+                            <constraint firstItem="2QI-f0-YLj" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.06" id="DKE-5U-8Ku"/>
                             <constraint firstItem="SQe-UH-lSA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="F1P-Tb-UjZ"/>
                             <constraint firstItem="SQe-UH-lSA" firstAttribute="bottom" secondItem="DWU-eF-8tl" secondAttribute="top" id="FTB-gY-xlD"/>
                             <constraint firstItem="w88-X2-5bx" firstAttribute="top" secondItem="eyk-EK-raM" secondAttribute="bottom" id="FTb-dg-VKd"/>
@@ -85,7 +85,7 @@
                             <constraint firstItem="SQe-UH-lSA" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="VWi-jq-NLW"/>
                             <constraint firstItem="SHS-hN-aPL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Vsz-v1-D27"/>
                             <constraint firstItem="DWU-eF-8tl" firstAttribute="width" secondItem="w88-X2-5bx" secondAttribute="width" id="YIW-5H-oWk"/>
-                            <constraint firstItem="w88-X2-5bx" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.75" id="b0p-xs-MeY"/>
+                            <constraint firstItem="w88-X2-5bx" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.65" id="b0p-xs-MeY"/>
                             <constraint firstItem="SHS-hN-aPL" firstAttribute="top" secondItem="2QI-f0-YLj" secondAttribute="bottom" id="eSM-jo-Pac"/>
                             <constraint firstItem="fV8-bd-sgm" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="gFb-aK-sRH"/>
                             <constraint firstItem="eyk-EK-raM" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.05" id="mHz-xI-0TG"/>
@@ -102,8 +102,8 @@
                         <outlet property="appTextView" destination="w88-X2-5bx" id="NMB-q1-dYU"/>
                         <outlet property="bottomSpace" destination="SHS-hN-aPL" id="bO0-WS-LLg"/>
                         <outlet property="btnGap" destination="tUF-aZ-j0B" id="bgT-ZE-Hp3"/>
-                        <outlet property="settingsBtn" destination="DWU-eF-8tl" id="XPb-6O-Qqs"/>
-                        <outlet property="switchLangBtn" destination="2QI-f0-YLj" id="3wc-jq-v4l"/>
+                        <outlet property="openSettingsBtn" destination="DWU-eF-8tl" id="qF1-DA-Kmb"/>
+                        <outlet property="switchLangBtn" destination="2QI-f0-YLj" id="iEH-Ov-Lvn"/>
                         <outlet property="textGap" destination="SQe-UH-lSA" id="Vvs-Qt-yhC"/>
                         <outlet property="topSpace" destination="eyk-EK-raM" id="Xqt-JJ-RLp"/>
                     </connections>

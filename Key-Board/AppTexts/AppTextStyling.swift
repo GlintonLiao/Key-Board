@@ -9,7 +9,7 @@ import UIKit
 var fontSize = CGFloat(0)
 /// Sets the font size for the text in the app screen and corresponding UIImage icons.
 func setFontSize() {
-  fontSize = UIScreen.main.bounds.height / 65
+  fontSize = UIScreen.main.bounds.height / 56
 }
 
 /// Concatenates attributed strings.

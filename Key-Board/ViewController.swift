@@ -11,8 +11,8 @@ class ViewController: UIViewController {
   // Variables linked to elements in AppScreen.storyboard.
   @IBOutlet weak var appTextView: UITextView!
 
+  @IBOutlet weak var openSettingsBtn: UIButton!
   @IBOutlet weak var switchLangBtn: UIButton!
-  @IBOutlet weak var settingsBtn: UIButton!
   
   // Spacing views to size app screen proportionally.
   @IBOutlet weak var topSpace: UIView!
@@ -61,21 +61,21 @@ class ViewController: UIViewController {
 
   // The app screen is white content on blue, so match the status bar.
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
+    return .darkContent
   }
-
-  let switchLangColor = UIColor(red: 241.0/255.0, green: 204.0/255.0, blue: 131.0/255.0, alpha: 1.0)
+  
+  let openSettingsColor = UIColor(red: 95.0/255.0, green: 66.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+  let switchLangColor = UIColor(red: 179.0/255.0, green: 98.0/255.0, blue: 85.0/255.0, alpha: 1.0)
   /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
   func setSwitchLangBtn() {
-    switchLangBtn.setTitle("Current Language: C++", for: .normal)
+    switchLangBtn.setTitle("Language Mode: C++", for: .normal)
     switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-    switchLangBtn.setTitleColor(.init(.keyChar).light, for: .normal)
-    switchLangBtn.titleLabel?.font = .systemFont(ofSize: fontSize * 1.5)
+    switchLangBtn.setTitleColor(.white, for: .normal)
+    switchLangBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
 
     switchLangBtn.clipsToBounds = true
     switchLangBtn.backgroundColor = switchLangColor
-    applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.35)
-    applyShadowEffects(elem: switchLangBtn)
+    applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.1)
 
     switchLangBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
     switchLangBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
@@ -83,8 +83,17 @@ class ViewController: UIViewController {
 
   /// Sets the functionality of the button over the keyboard installation guide that opens Settings.
   func setSettingsBtn() {
-    settingsBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
-    settingsBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
+    openSettingsBtn.setTitle("Open Settings", for: .normal)
+    openSettingsBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+    openSettingsBtn.setTitleColor(.white, for: .normal)
+    openSettingsBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
+
+    openSettingsBtn.clipsToBounds = true
+    openSettingsBtn.backgroundColor = openSettingsColor
+    applyCornerRadius(elem: openSettingsBtn, radius: openSettingsBtn.frame.height * 0.1)
+
+    openSettingsBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
+    openSettingsBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
   }
 
   /// Sets constant properties for the app screen.
@@ -102,8 +111,8 @@ class ViewController: UIViewController {
     // Height ratios to set corner radii exactly.
 //    let installTextToSwitchBtnHeightRatio = appTextBackground.frame.height / switchViewBackground.frame.height
 
-    settingsBtn.clipsToBounds = true
-    settingsBtn.layer.masksToBounds = false
+    openSettingsBtn.clipsToBounds = true
+    openSettingsBtn.layer.masksToBounds = false
 //    settingsBtn.layer.cornerRadius = appTextBackground.frame.height * 0.4 / installTextToSwitchBtnHeightRatio
 
     // Disable text views.
@@ -123,7 +132,7 @@ class ViewController: UIViewController {
     let settingsSymbol: UIImage = getSettingsSymbol(fontSize: fontSize)
 
     // Enable installation directions and GitHub notice elements.
-    settingsBtn.isUserInteractionEnabled = true
+    openSettingsBtn.isUserInteractionEnabled = true
 
     // Set the texts for the fields.
     appTextView.attributedText = setENInstallation(fontSize: fontSize)
