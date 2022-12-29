@@ -42,43 +42,8 @@ func getENInstallationDirections(fontSize: CGFloat) -> NSMutableAttributedString
   """, attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!])
   
   let att = NSMutableParagraphStyle()
-  att.lineSpacing = 8.0
+  att.lineSpacing = 7.0
   startOfBody.addAttribute(NSAttributedString.Key.paragraphStyle, value: att, range: NSRange(location: 0, length: startOfBody.length))
-  
-  let installDirections = NSMutableAttributedString(string: """
-  \n
-  2. In General do the following:
-
-        Keyboard
-
-  """, attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!])
-
-  installDirections.append(NSAttributedString(string: "\n         "))
-
-  installDirections.append(NSMutableAttributedString(string: """
-  \u{0020} Keyboards
-
-  """, attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!]))
-
-  installDirections.append(NSMutableAttributedString(
-      string: "\n                    ",
-      attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!]
-    )
-  )
-
-  installDirections.append(startOfBody)
-
-  installDirections.append(NSMutableAttributedString(string: """
-  \u{0020} Add New Keyboard
-
-  3. Select Scribe and then activate keyboards
-
-  4. When typing press\u{0020}
-  """, attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!]))
-
-  installDirections.append(NSMutableAttributedString(string: """
-  \u{0020}to select keyboards
-  """, attributes: [NSAttributedString.Key.font: UIFont(name: "Menlo", size: fontSize)!]))
 
   return startOfBody
 }

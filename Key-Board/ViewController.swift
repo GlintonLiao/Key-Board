@@ -66,20 +66,6 @@ class ViewController: UIViewController {
   
   let openSettingsColor = UIColor(red: 95.0/255.0, green: 66.0/255.0, blue: 65.0/255.0, alpha: 1.0)
   let switchLangColor = UIColor(red: 179.0/255.0, green: 98.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-  /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
-  func setSwitchLangBtn() {
-    switchLangBtn.setTitle("Language Mode: C++", for: .normal)
-    switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-    switchLangBtn.setTitleColor(.white, for: .normal)
-    switchLangBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
-
-    switchLangBtn.clipsToBounds = true
-    switchLangBtn.backgroundColor = switchLangColor
-    applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.1)
-
-    switchLangBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
-    switchLangBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
-  }
 
   /// Sets the functionality of the button over the keyboard installation guide that opens Settings.
   func setSettingsBtn() {
@@ -94,6 +80,21 @@ class ViewController: UIViewController {
 
     openSettingsBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
     openSettingsBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
+  }
+  
+  /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
+  func setSwitchLangBtn() {
+    switchLangBtn.setTitle("Language Mode: C++", for: .normal)
+    switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+    switchLangBtn.setTitleColor(.white, for: .normal)
+    switchLangBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
+
+    switchLangBtn.clipsToBounds = true
+    switchLangBtn.backgroundColor = switchLangColor
+    applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.1)
+
+    switchLangBtn.addTarget(self, action: #selector(showPopUpMenu), for: .touchUpInside)
+    switchLangBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
   }
 
   /// Sets constant properties for the app screen.
@@ -153,6 +154,21 @@ class ViewController: UIViewController {
   /// Function to open the settings app that is targeted by settingsBtn.
   @objc func openSettingsApp() {
     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+  }
+  
+  @objc func menuItemTapped() {
+  }
+  
+  @objc func showPopUpMenu() {
+    let item1 = UIMenuItem(title: "C++", action: #selector(menuItemTapped))
+    let item2 = UIMenuItem(title: "JavaScript", action: #selector(menuItemTapped))
+    let item3 = UIMenuItem(title: "Python", action: #selector(menuItemTapped))
+    let item4 = UIMenuItem(title: "Java", action: #selector(menuItemTapped))
+    let item5 = UIMenuItem(title: "Swift", action: #selector(menuItemTapped))
+    // Create a UIMenuController and set the menu items
+    let menuController = UIMenuController.shared
+    menuController.menuItems = [item1, item2, item3, item4, item5]
+    menuController.showMenu(from: switchLangBtn, rect: switchLangBtn.bounds)
   }
 
   /// Function to change the key coloration given a touch down.

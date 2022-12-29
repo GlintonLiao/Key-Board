@@ -45,35 +45,3 @@ func addHyperLinks(originalText: String, links: [String: String], fontSize: CGFl
 
   return attributedOriginalText
 }
-
-/// Formats and returns an arrow icon for the app texts.
-///
-/// - Parameters
-///  - fontSize: the size of the font derived for the app text given screen dimensions.
-func getArrowIcon(fontSize: CGFloat) -> NSAttributedString {
-  // The down right arrow character as a text attachment.
-  let arrowAttachment = NSTextAttachment()
-  let selectArrowIconConfig = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .medium, scale: .medium)
-  arrowAttachment.image = UIImage(
-    systemName: "arrow.turn.down.right",
-    withConfiguration: selectArrowIconConfig
-  )?.withTintColor(.init(.scribeGray))
-
-  return NSAttributedString(attachment: arrowAttachment)
-}
-
-/// Formats and returns an arrow icon for the app texts.
-///
-/// - Parameters
-///  - fontSize: the size of the font derived for the app text given screen dimensions.
-func getGlobeIcon(fontSize: CGFloat) -> NSAttributedString {
-  // The globe character as a text attachment.
-  let globeAttachment = NSTextAttachment()
-  let selectGlobeIconConfig = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .medium, scale: .medium)
-  globeAttachment.image = UIImage(
-    systemName: "globe",
-    withConfiguration: selectGlobeIconConfig
-  )?.withTintColor(.init(.scribeGray))
-
-  return NSAttributedString(attachment: globeAttachment)
-}
