@@ -25,6 +25,7 @@ class KeyboardViewController: UIInputViewController {
   
   var keyboardView: UIView!
   let notificationCenter = NotificationCenter.default
+  let pasteboard = UIPasteboard.general
   
   override func updateViewConstraints() {
     super.updateViewConstraints()
@@ -387,12 +388,15 @@ class KeyboardViewController: UIInputViewController {
   
     override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
+      
+      if let message = pasteboard.string {
+        lang = message
+      }
+      
       updateViewConstraints()
       keyboardLoad = true
       loadKeys()
       keyboardLoad = false
-      
-      notificationCenter.addObserver(self, selector: #selector(handleNotification), name: Notification.Name(rawValue: "LangMode"), object: nil)
     }
   
     /// Includes:

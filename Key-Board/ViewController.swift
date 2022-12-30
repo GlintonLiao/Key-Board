@@ -23,6 +23,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var btnGap: UIView!
   
   let notificationCenter = NotificationCenter.default
+  let pasteboard = UIPasteboard.general
 
   /// Includes a call to checkDarkModeSetColors to set brand colors and a call to set the UI for the app screen.
   override func viewDidLoad() {
@@ -155,7 +156,7 @@ class ViewController: UIViewController {
     setUIConstantProperties()
     setUIDeviceProperties()
     setInstallationUI()
-    setNotification()
+//    setNotification()
   }
 
   /// Function to open the settings app that is targeted by settingsBtn.
@@ -165,29 +166,25 @@ class ViewController: UIViewController {
   
   @objc func setCPP() {
     lang = "C++"
-    let mode = ["name": lang]
-    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    pasteboard.string = lang
     setSwitchLangBtn()
   }
   
   @objc func setJava() {
     lang = "Java"
-    let mode = ["name": lang]
-    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    pasteboard.string = lang
     setSwitchLangBtn()
   }
   
   @objc func setJs() {
     lang = "JS"
-    let mode = ["name": lang]
-    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    pasteboard.string = lang
     setSwitchLangBtn()
   }
   
   @objc func setPy() {
     lang = "Py"
-    let mode = ["name": lang]
-    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    pasteboard.string = lang
     setSwitchLangBtn()
   }
   

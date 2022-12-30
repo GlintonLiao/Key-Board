@@ -14,7 +14,6 @@ class CommandKey: UIButton {
   
   func setConfig(idx: Int) {
     var configuration = UIButton.Configuration.plain()
-    print(lang)
     switch idx {
     case 0:
       configuration.attributedTitle = AttributedString(lang, attributes: AttributeContainer([
@@ -23,9 +22,20 @@ class CommandKey: UIButton {
           green: 1,
           blue: 1,
           alpha: 1.0),
-        NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
+        NSAttributedString.Key.font: UIFont(name: "Menlo", size: lang == "Java" ? 15 : 20)!
       ]))
-      self.backgroundColor = .systemPink
+      
+      // set background color
+      if lang == "C++" {
+        self.backgroundColor = .systemPink
+      } else if lang == "Java" {
+        self.backgroundColor = .systemIndigo
+      } else if lang == "Py" {
+        self.backgroundColor = .systemPurple
+      } else if lang == "JS" {
+        self.backgroundColor = .systemYellow
+      }
+      
       self.layer.setValue("lang", forKey: "original")
       self.layer.setValue("lang", forKey: "keyToDisplay")
       self.layer.setValue(false, forKey: "isSpecial")
