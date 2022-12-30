@@ -24,6 +24,7 @@ class KeyboardViewController: UIInputViewController {
   @IBOutlet weak var partition0: UILabel!
   
   var keyboardView: UIView!
+  let notificationCenter = NotificationCenter.default
   
   override func updateViewConstraints() {
     super.updateViewConstraints()
@@ -363,6 +364,15 @@ class KeyboardViewController: UIInputViewController {
       }
     }
   }
+  
+  @objc func handleNotification(notification: Notification) {
+    print("asdasd")
+    if let mode = notification.userInfo {
+      let value = mode["name"] as? String
+      lang = value ?? lang
+      print(lang)
+    }
+  }
     
     override func viewDidLoad() {
       super.viewDidLoad()
@@ -381,6 +391,8 @@ class KeyboardViewController: UIInputViewController {
       keyboardLoad = true
       loadKeys()
       keyboardLoad = false
+      
+      notificationCenter.addObserver(self, selector: #selector(handleNotification), name: Notification.Name(rawValue: "LangMode"), object: nil)
     }
   
     /// Includes:

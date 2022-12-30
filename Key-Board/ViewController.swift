@@ -21,6 +21,8 @@ class ViewController: UIViewController {
   // gaps
   @IBOutlet weak var textGap: UIView!
   @IBOutlet weak var btnGap: UIView!
+  
+  let notificationCenter = NotificationCenter.default
 
   /// Includes a call to checkDarkModeSetColors to set brand colors and a call to set the UI for the app screen.
   override func viewDidLoad() {
@@ -84,7 +86,7 @@ class ViewController: UIViewController {
   
   /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
   func setSwitchLangBtn() {
-    switchLangBtn.setTitle("Language Mode: C++", for: .normal)
+    switchLangBtn.setTitle("Language Mode:" + lang, for: .normal)
     switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
     switchLangBtn.setTitleColor(.white, for: .normal)
     switchLangBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
@@ -139,6 +141,10 @@ class ViewController: UIViewController {
     appTextView.attributedText = setENInstallation(fontSize: fontSize)
     appTextView.textColor = .init(.keyChar).light
   }
+  
+  func setNotification() {
+    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil)
+  }
 
   /// Creates the current app UI by applying constraints and calling child UI functions.
   func setCurrentUI() {
@@ -149,6 +155,7 @@ class ViewController: UIViewController {
     setUIConstantProperties()
     setUIDeviceProperties()
     setInstallationUI()
+    setNotification()
   }
 
   /// Function to open the settings app that is targeted by settingsBtn.
@@ -156,18 +163,42 @@ class ViewController: UIViewController {
     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
   }
   
-  @objc func menuItemTapped() {
+  @objc func setCPP() {
+    lang = "C++"
+    let mode = ["name": lang]
+    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    setSwitchLangBtn()
+  }
+  
+  @objc func setJava() {
+    lang = "Java"
+    let mode = ["name": lang]
+    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    setSwitchLangBtn()
+  }
+  
+  @objc func setJs() {
+    lang = "JS"
+    let mode = ["name": lang]
+    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    setSwitchLangBtn()
+  }
+  
+  @objc func setPy() {
+    lang = "Py"
+    let mode = ["name": lang]
+    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil, userInfo: mode)
+    setSwitchLangBtn()
   }
   
   @objc func showPopUpMenu() {
-    let item1 = UIMenuItem(title: "C++", action: #selector(menuItemTapped))
-    let item2 = UIMenuItem(title: "JavaScript", action: #selector(menuItemTapped))
-    let item3 = UIMenuItem(title: "Python", action: #selector(menuItemTapped))
-    let item4 = UIMenuItem(title: "Java", action: #selector(menuItemTapped))
-    let item5 = UIMenuItem(title: "Swift", action: #selector(menuItemTapped))
+    let item1 = UIMenuItem(title: "C++", action: #selector(setCPP))
+    let item2 = UIMenuItem(title: "JavaScript", action: #selector(setJs))
+    let item3 = UIMenuItem(title: "Python", action: #selector(setPy))
+    let item4 = UIMenuItem(title: "Java", action: #selector(setJava))
     // Create a UIMenuController and set the menu items
     let menuController = UIMenuController.shared
-    menuController.menuItems = [item1, item2, item3, item4, item5]
+    menuController.menuItems = [item1, item2, item3, item4]
     menuController.showMenu(from: switchLangBtn, rect: switchLangBtn.bounds)
   }
 

@@ -14,9 +14,10 @@ class CommandKey: UIButton {
   
   func setConfig(idx: Int) {
     var configuration = UIButton.Configuration.plain()
+    print(lang)
     switch idx {
     case 0:
-      configuration.attributedTitle = AttributedString("C++", attributes: AttributeContainer([
+      configuration.attributedTitle = AttributedString(lang, attributes: AttributeContainer([
         NSAttributedString.Key.foregroundColor: UIColor(
           red: 1,
           green: 1,
