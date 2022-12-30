@@ -34,11 +34,7 @@ class NumberKey: UIButton {
       NSAttributedString.Key.font: UIFont(name: "Menlo", size: 12)!
     ]))
     configuration.attributedSubtitle = AttributedString(self.r2, attributes: AttributeContainer([
-      NSAttributedString.Key.foregroundColor: UIColor(
-        red: 20/255.0,
-        green: 20/255.0,
-        blue: 20/255.0,
-        alpha: 1.0),
+      NSAttributedString.Key.foregroundColor: keyCharColor,
       NSAttributedString.Key.font: UIFont(name: "Menlo", size: 16)!
     ]))
     configuration.titleAlignment = .center

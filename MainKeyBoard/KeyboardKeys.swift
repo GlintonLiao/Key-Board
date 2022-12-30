@@ -69,11 +69,11 @@ class KeyboardKey: UIButton {
 
   /// Sets the character size of a capital key if the device is an iPhone given the orientation.
   func setPhoneCapCharSize() {
-    if isLandscapeView == true {
+    if isLandscapeView {
       if self.key == "space" {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 4)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 10)
       } else {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 1.5)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 5)
       }
     } else {
       if self.key == "space" {
@@ -91,7 +91,7 @@ class KeyboardKey: UIButton {
     if isSpecial == false
         && shiftButtonState == .normal {
       if isLandscapeView == true {
-        self.titleLabel?.font = .systemFont(ofSize: letterKeyWidth / 2.4)
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 5)
       } else {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }

@@ -68,7 +68,7 @@ class ViewController: UIViewController {
   
   let switchLangColor = UIColor(red: 179.0/255.0, green: 98.0/255.0, blue: 85.0/255.0, alpha: 1.0)
   func setSwitchLangBtn() {
-    switchLangBtn.setTitle("Language Mode:" + lang, for: .normal)
+    switchLangBtn.setTitle("Language Mode:" + language, for: .normal)
     switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
     switchLangBtn.setTitleColor(.white, for: .normal)
     switchLangBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
@@ -153,26 +153,26 @@ class ViewController: UIViewController {
   }
   
   @objc func setCPP() {
-    lang = "C++"
-    pasteboard.string = lang
+    language = "C++"
+    pasteboard.string = language
     setSwitchLangBtn()
   }
   
   @objc func setJava() {
-    lang = "Java"
-    pasteboard.string = lang
+    language = "Java"
+    pasteboard.string = language
     setSwitchLangBtn()
   }
   
   @objc func setJs() {
-    lang = "JS"
-    pasteboard.string = lang
+    language = "JS"
+    pasteboard.string = language
     setSwitchLangBtn()
   }
   
   @objc func setPy() {
-    lang = "Py"
-    pasteboard.string = lang
+    language = "Py"
+    pasteboard.string = language
     setSwitchLangBtn()
   }
   

@@ -29,19 +29,34 @@ class KeyboardViewController: UIInputViewController {
   
   override func updateViewConstraints() {
     super.updateViewConstraints()
-      
-      // Add custom view sizing constraints here
-    let heightConstraint = NSLayoutConstraint(
-      item: view!,
-      attribute: NSLayoutConstraint.Attribute.height,
-      relatedBy: NSLayoutConstraint.Relation.equal,
-      toItem: nil,
-      attribute: NSLayoutConstraint.Attribute.notAnAttribute,
-      multiplier: 1.0,
-      constant: 380
-    )
+    
+    checkLandscapeMode()
+    let heightConstraint: NSLayoutConstraint;
+    // Add custom view sizing constraints here
+    if isLandscapeView {
+      print("LandScape")
+      heightConstraint = NSLayoutConstraint(
+        item: view!,
+        attribute: NSLayoutConstraint.Attribute.height,
+        relatedBy: NSLayoutConstraint.Relation.equal,
+        toItem: nil,
+        attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+        multiplier: 1.0,
+        constant: 280
+      )
+    } else {
+      print("Not LandScape")
+      heightConstraint = NSLayoutConstraint(
+        item: view!,
+        attribute: NSLayoutConstraint.Attribute.height,
+        relatedBy: NSLayoutConstraint.Relation.equal,
+        toItem: nil,
+        attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+        multiplier: 1.0,
+        constant: 380
+      )
+    }
     view.addConstraint(heightConstraint)
-
     keyboardView.frame.size = view.frame.size
   }
   
@@ -274,8 +289,13 @@ class KeyboardViewController: UIInputViewController {
   
   func loadKeys() {
     letterKeys = EnglishKeyboardConstants.lettersKeys
-    letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
-    commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
+    if isLandscapeView {
+      letterKeyWidth = (UIScreen.main.bounds.height - 5) / CGFloat(letterKeys[0].count) * 1.5
+      commandKeyWidth = (UIScreen.main.bounds.height - 5) / 6 * 1.5
+    } else {
+      letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
+      commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
+    }
     keyCornerRadius = letterKeyWidth / 6
     keyWidth = letterKeyWidth
     
@@ -380,8 +400,8 @@ class KeyboardViewController: UIInputViewController {
     
     // update the languagemode
     if let message = pasteboard.string {
-      lang = message
-      autosuggestions = loadJSON(filename: lang)
+      language = message
+      autosuggestions = loadJSON(filename: language)
     }
     
     updateViewConstraints()
@@ -395,6 +415,12 @@ class KeyboardViewController: UIInputViewController {
   /// - A call to loadKeys to reload the display after an orientation change
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
+    
+    if size.width > size.height {
+      isLandscapeView = false
+    } else {
+      isLandscapeView = true
+    }
     updateViewConstraints()
     keyboardLoad = true
     loadKeys()

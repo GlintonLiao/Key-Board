@@ -17,23 +17,23 @@ class CommandKey: UIButton {
     switch idx {
     // language mode key
     case 0:
-      configuration.attributedTitle = AttributedString(lang, attributes: AttributeContainer([
+      configuration.attributedTitle = AttributedString(language, attributes: AttributeContainer([
         NSAttributedString.Key.foregroundColor: UIColor(
           red: 1,
           green: 1,
           blue: 1,
           alpha: 1.0),
-        NSAttributedString.Key.font: UIFont(name: "Menlo", size: lang == "Java" ? 15 : 20)!
+        NSAttributedString.Key.font: UIFont(name: "Menlo", size: language == "Java" ? 15 : 20)!
       ]))
       
       // set background color
-      if lang == "C++" {
+      if language == "C++" {
         self.backgroundColor = .systemPink
-      } else if lang == "Java" {
+      } else if language == "Java" {
         self.backgroundColor = .systemIndigo
-      } else if lang == "Py" {
+      } else if language == "Py" {
         self.backgroundColor = .systemPurple
-      } else if lang == "JS" {
+      } else if language == "JS" {
         self.backgroundColor = .systemYellow
       }
       
@@ -67,19 +67,11 @@ class CommandKey: UIButton {
         let r1 = EnglishKeyboardConstants.commandKeys[idx][0]
         let r2 = EnglishKeyboardConstants.commandKeys[idx][1]
         configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 20/255.0,
-            green: 20/255.0,
-            blue: 20/255.0,
-            alpha: 1.0),
+          NSAttributedString.Key.foregroundColor: keyCharColor,
           NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
         ]))
         configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 20/255.0,
-            green: 20/255.0,
-            blue: 20/255.0,
-            alpha: 1.0),
+          NSAttributedString.Key.foregroundColor: keyCharColor,
           NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
         ]))
         self.layer.setValue(baseKeySet[idx], forKey: "original")
@@ -100,11 +92,7 @@ class CommandKey: UIButton {
           break
         }
         configuration.attributedTitle = AttributedString(str, attributes: AttributeContainer([
-          NSAttributedString.Key.foregroundColor: UIColor(
-            red: 20/255.0,
-            green: 20/255.0,
-            blue: 20/255.0,
-            alpha: 1.0),
+          NSAttributedString.Key.foregroundColor: keyCharColor,
           NSAttributedString.Key.font: UIFont(name: "Menlo", size: 20)!
         ]))
         self.layer.setValue(str, forKey: "original")

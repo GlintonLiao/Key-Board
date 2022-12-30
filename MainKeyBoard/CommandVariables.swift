@@ -14,8 +14,8 @@ var backspaceTimer: Timer?
 var scribeKeyHeight = CGFloat(0)
 
 // All data needed for Scribe commands for the given language keyboard.
-var lang = "C++"
-var autosuggestions = loadJSON(filename: lang)
+var language = "C++"
+var autosuggestions = loadJSON(filename: language)
 
 // Words that should not be included in autocomplete should be added to the string below.
 var autocompleteWords = [String]()
