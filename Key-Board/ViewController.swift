@@ -22,7 +22,6 @@ class ViewController: UIViewController {
   @IBOutlet weak var textGap: UIView!
   @IBOutlet weak var btnGap: UIView!
   
-  let notificationCenter = NotificationCenter.default
   let pasteboard = UIPasteboard.general
 
   /// Includes a call to checkDarkModeSetColors to set brand colors and a call to set the UI for the app screen.
@@ -67,25 +66,7 @@ class ViewController: UIViewController {
     return .darkContent
   }
   
-  let openSettingsColor = UIColor(red: 95.0/255.0, green: 66.0/255.0, blue: 65.0/255.0, alpha: 1.0)
   let switchLangColor = UIColor(red: 179.0/255.0, green: 98.0/255.0, blue: 85.0/255.0, alpha: 1.0)
-
-  /// Sets the functionality of the button over the keyboard installation guide that opens Settings.
-  func setSettingsBtn() {
-    openSettingsBtn.setTitle("Open Settings", for: .normal)
-    openSettingsBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-    openSettingsBtn.setTitleColor(.white, for: .normal)
-    openSettingsBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
-
-    openSettingsBtn.clipsToBounds = true
-    openSettingsBtn.backgroundColor = openSettingsColor
-    applyCornerRadius(elem: openSettingsBtn, radius: openSettingsBtn.frame.height * 0.1)
-
-    openSettingsBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
-    openSettingsBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
-  }
-  
-  /// Sets the functionality of the button that switches between installation instructions and the privacy policy.
   func setSwitchLangBtn() {
     switchLangBtn.setTitle("Language Mode:" + lang, for: .normal)
     switchLangBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
@@ -97,7 +78,20 @@ class ViewController: UIViewController {
     applyCornerRadius(elem: switchLangBtn, radius: switchLangBtn.frame.height * 0.1)
 
     switchLangBtn.addTarget(self, action: #selector(showPopUpMenu), for: .touchUpInside)
-    switchLangBtn.addTarget(self, action: #selector(keyTouchDown), for: .touchDown)
+  }
+  
+  let openSettingsColor = UIColor(red: 95.0/255.0, green: 66.0/255.0, blue: 65.0/255.0, alpha: 1.0)
+  func setSettingsBtn() {
+    openSettingsBtn.setTitle("Open Settings", for: .normal)
+    openSettingsBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+    openSettingsBtn.setTitleColor(.white, for: .normal)
+    openSettingsBtn.titleLabel?.font = UIFont(name: "Menlo", size: fontSize)
+
+    openSettingsBtn.clipsToBounds = true
+    openSettingsBtn.backgroundColor = openSettingsColor
+    applyCornerRadius(elem: openSettingsBtn, radius: openSettingsBtn.frame.height * 0.1)
+
+    openSettingsBtn.addTarget(self, action: #selector(openSettingsApp), for: .touchUpInside)
   }
 
   /// Sets constant properties for the app screen.
@@ -133,7 +127,6 @@ class ViewController: UIViewController {
 
   /// Sets the necessary properties for the installation UI including calling text generation functions.
   func setInstallationUI() {
-    let settingsSymbol: UIImage = getSettingsSymbol(fontSize: fontSize)
 
     // Enable installation directions and GitHub notice elements.
     openSettingsBtn.isUserInteractionEnabled = true
@@ -141,10 +134,6 @@ class ViewController: UIViewController {
     // Set the texts for the fields.
     appTextView.attributedText = setENInstallation(fontSize: fontSize)
     appTextView.textColor = .init(.keyChar).light
-  }
-  
-  func setNotification() {
-    notificationCenter.post(name: Notification.Name(rawValue: "LangMode"), object: nil)
   }
 
   /// Creates the current app UI by applying constraints and calling child UI functions.
@@ -156,7 +145,6 @@ class ViewController: UIViewController {
     setUIConstantProperties()
     setUIDeviceProperties()
     setInstallationUI()
-//    setNotification()
   }
 
   /// Function to open the settings app that is targeted by settingsBtn.
@@ -193,35 +181,8 @@ class ViewController: UIViewController {
     let item2 = UIMenuItem(title: "JavaScript", action: #selector(setJs))
     let item3 = UIMenuItem(title: "Python", action: #selector(setPy))
     let item4 = UIMenuItem(title: "Java", action: #selector(setJava))
-    // Create a UIMenuController and set the menu items
     let menuController = UIMenuController.shared
     menuController.menuItems = [item1, item2, item3, item4]
     menuController.showMenu(from: switchLangBtn, rect: switchLangBtn.bounds)
-  }
-
-  /// Function to change the key coloration given a touch down.
-  ///
-  /// - Parameters
-  ///  - sender: the button that has been pressed.
-  @objc func keyTouchDown(_ sender: UIButton) {
-//    if sender == switchLang {
-//      sender.backgroundColor = .clear
-//      sender.setTitleColor(switchViewColor, for: .normal)
-//
-//      // Bring sender's background and text colors back to their original values.
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [self] in
-//        sender.backgroundColor = switchViewColor
-//        sender.setTitleColor(.init(.keyChar).light, for: .normal)
-//      }
-//    } else {
-//      sender.backgroundColor = .black
-//      sender.alpha = 0.2
-//
-//      // Bring sender's opacity back up to fully opaque and replace the background color.
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-//        sender.backgroundColor = .clear
-//        sender.alpha = 1.0
-//      }
-//    }
   }
 }

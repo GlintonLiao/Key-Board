@@ -15,6 +15,7 @@ class CommandKey: UIButton {
   func setConfig(idx: Int) {
     var configuration = UIButton.Configuration.plain()
     switch idx {
+    // language mode key
     case 0:
       configuration.attributedTitle = AttributedString(lang, attributes: AttributeContainer([
         NSAttributedString.Key.foregroundColor: UIColor(

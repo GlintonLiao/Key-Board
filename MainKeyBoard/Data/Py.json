@@ -1,8 +1,8 @@
 {
-"function": [
-"name",
-"foo",
-"func"
+"for": [
+"i",
+"in",
+"range("
 ],
 "int": [
 "max",

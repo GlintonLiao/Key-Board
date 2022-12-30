@@ -285,7 +285,6 @@ class KeyboardViewController: UIInputViewController {
     for view in [stackView0, stackView1, stackView2, stackView3, stackView4, stackView5, stackView6] {
       view?.isUserInteractionEnabled = true
       view?.isLayoutMarginsRelativeArrangement = true
-
       // Set edge insets for stack views to provide vertical key spacing.
       view?.layoutMargins = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
     }
@@ -306,7 +305,6 @@ class KeyboardViewController: UIInputViewController {
         btn.style()
         btn.setChar()
         btn.setCharSize()
-        
         btn.adjustKeyWidth()
         
         keyboardKeys.append(btn)
@@ -365,70 +363,62 @@ class KeyboardViewController: UIInputViewController {
       }
     }
   }
+    
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    proxy = textDocumentProxy as UITextDocumentProxy
+    keyboardLoad = true
+    loadInterface()
+    keyboardLoad = false
+
+    self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+  }
   
-  @objc func handleNotification(notification: Notification) {
-    print("asdasd")
-    if let mode = notification.userInfo {
-      let value = mode["name"] as? String
-      lang = value ?? lang
-      print(lang)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    // update the languagemode
+    if let message = pasteboard.string {
+      lang = message
+      autosuggestions = loadJSON(filename: lang)
     }
+    
+    updateViewConstraints()
+    keyboardLoad = true
+    loadKeys()
+    keyboardLoad = false
+  }
+  
+  /// Includes:
+  /// - updateViewConstraints to change the keyboard height
+  /// - A call to loadKeys to reload the display after an orientation change
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    updateViewConstraints()
+    keyboardLoad = true
+    loadKeys()
+    keyboardLoad = false
+  }
+  
+  override func viewWillLayoutSubviews() {
+    self.nextKeyboardButton.isHidden = !self.needsInputModeSwitchKey
+    super.viewWillLayoutSubviews()
+  }
+  
+  override func textWillChange(_ textInput: UITextInput?) {
+      // The app is about to change the document's contents. Perform any preparation here.
   }
     
-    override func viewDidLoad() {
-      super.viewDidLoad()
-
-      proxy = textDocumentProxy as UITextDocumentProxy
-      keyboardLoad = true
-      loadInterface()
-      keyboardLoad = false
-
-      self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+  override func textDidChange(_ textInput: UITextInput?) {
+    // The app has just changed the document's contents, the document context has been updated.
+    var textColor: UIColor
+    let proxy = self.textDocumentProxy
+    if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
+        textColor = UIColor.white
+    } else {
+        textColor = UIColor.black
     }
-  
-    override func viewWillAppear(_ animated: Bool) {
-      super.viewWillAppear(animated)
-      
-      if let message = pasteboard.string {
-        lang = message
-      }
-      
-      updateViewConstraints()
-      keyboardLoad = true
-      loadKeys()
-      keyboardLoad = false
-    }
-  
-    /// Includes:
-    /// - updateViewConstraints to change the keyboard height
-    /// - A call to loadKeys to reload the display after an orientation change
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-      super.viewWillTransition(to: size, with: coordinator)
-      updateViewConstraints()
-      keyboardLoad = true
-      loadKeys()
-      keyboardLoad = false
-    }
-    
-    override func viewWillLayoutSubviews() {
-      self.nextKeyboardButton.isHidden = !self.needsInputModeSwitchKey
-      super.viewWillLayoutSubviews()
-    }
-    
-    override func textWillChange(_ textInput: UITextInput?) {
-        // The app is about to change the document's contents. Perform any preparation here.
-    }
-    
-    override func textDidChange(_ textInput: UITextInput?) {
-        // The app has just changed the document's contents, the document context has been updated.
-        
-        var textColor: UIColor
-        let proxy = self.textDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-            textColor = UIColor.white
-        } else {
-            textColor = UIColor.black
-        }
-        self.nextKeyboardButton.setTitleColor(textColor, for: [])
-    }
+    self.nextKeyboardButton.setTitleColor(textColor, for: [])
+  }
 }

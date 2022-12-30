@@ -83,7 +83,6 @@
 		C75FBB7D295BB27B00B2E35C /* C++.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "C++.json"; sourceTree = "<group>"; };
 		C75FBB81295E51E800B2E35C /* Py.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Py.json; sourceTree = "<group>"; };
 		C75FBB82295E51F500B2E35C /* Java.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Java.json; sourceTree = "<group>"; };
-		C75FBB89295E548E00B2E35C /* Key-Board.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Key-Board.entitlements"; sourceTree = "<group>"; };
 		C798947229514E560019324F /* MainKeyBoard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainKeyBoard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C798947429514E560019324F /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		C798947629514E560019324F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,7 +153,6 @@
 		38BD213222D5907F00C6795D /* Key-Board */ = {
 			isa = PBXGroup;
 			children = (
-				C75FBB89295E548E00B2E35C /* Key-Board.entitlements */,
 				D1A2DCAF27AD378F0057A10D /* AppTexts */,
 				38BD213322D5907F00C6795D /* AppDelegate.swift */,
 				D17193C327AEAD7D0038660B /* AppStyling.swift */,
@@ -549,7 +547,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Key-Board/Key-Board.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ATJ9U3WZ27;
@@ -578,7 +575,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Key-Board/Key-Board.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ATJ9U3WZ27;
@@ -626,7 +622,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -654,7 +650,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

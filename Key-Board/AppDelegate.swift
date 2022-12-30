@@ -1,7 +1,7 @@
 //
 //  AppDelegate.swift
 //
-//  A class of methods to manage Scribe's behaviors.
+//  A class of methods to manage App's behaviors.
 //
 
 import UIKit

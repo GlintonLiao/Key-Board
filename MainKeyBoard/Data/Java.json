@@ -1,8 +1,8 @@
 {
-"function": [
-"name",
-"foo",
-"func"
+"public": [
+"static",
+"Integer",
+"String"
 ],
 "int": [
 "max",
