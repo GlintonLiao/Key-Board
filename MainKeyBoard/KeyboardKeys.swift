@@ -90,13 +90,17 @@ class KeyboardKey: UIButton {
 
     if isSpecial == false
         && shiftButtonState == .normal {
-      if isLandscapeView == true {
-        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 5)
+      if isLandscapeView {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 3)
       } else {
         self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
       }
     } else {
-      self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
+      if isLandscapeView {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 3)
+      } else {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 1.5)
+      }
     }
     
     if self.key == ":"
@@ -104,7 +108,11 @@ class KeyboardKey: UIButton {
         || self.key == "."
         || self.key == ","
         || self.key == "space" {
-      self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
+      if isLandscapeView {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 4)
+      } else {
+        self.titleLabel?.font = UIFont(name: "Menlo", size: letterKeyWidth / 2)
+      }
     }
   }
 

@@ -292,11 +292,12 @@ class KeyboardViewController: UIInputViewController {
     if isLandscapeView {
       letterKeyWidth = (UIScreen.main.bounds.height - 5) / CGFloat(letterKeys[0].count) * 1.5
       commandKeyWidth = (UIScreen.main.bounds.height - 5) / 6 * 1.5
+      keyCornerRadius = letterKeyWidth / 8
     } else {
       letterKeyWidth = (UIScreen.main.bounds.width - 6) / CGFloat(letterKeys[0].count) * 0.875
       commandKeyWidth = (UIScreen.main.bounds.width - 6) / 6 * 0.935
+      keyCornerRadius = letterKeyWidth / 6
     }
-    keyCornerRadius = letterKeyWidth / 6
     keyWidth = letterKeyWidth
     
     // clear the previous layout
@@ -415,12 +416,6 @@ class KeyboardViewController: UIInputViewController {
   /// - A call to loadKeys to reload the display after an orientation change
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
-    
-    if size.width > size.height {
-      isLandscapeView = false
-    } else {
-      isLandscapeView = true
-    }
     updateViewConstraints()
     keyboardLoad = true
     loadKeys()

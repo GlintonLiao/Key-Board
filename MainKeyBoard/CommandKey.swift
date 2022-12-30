@@ -68,11 +68,11 @@ class CommandKey: UIButton {
         let r2 = EnglishKeyboardConstants.commandKeys[idx][1]
         configuration.attributedTitle = AttributedString(r1, attributes: AttributeContainer([
           NSAttributedString.Key.foregroundColor: keyCharColor,
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
+          NSAttributedString.Key.font: UIFont(name: "Menlo", size: isLandscapeView ? 10 : 15)!
         ]))
         configuration.attributedSubtitle = AttributedString(r2, attributes: AttributeContainer([
           NSAttributedString.Key.foregroundColor: keyCharColor,
-          NSAttributedString.Key.font: UIFont(name: "Menlo", size: 15)!
+          NSAttributedString.Key.font: UIFont(name: "Menlo", size: isLandscapeView ? 10 : 15)!
         ]))
         self.layer.setValue(baseKeySet[idx], forKey: "original")
         self.layer.setValue(baseKeySet[idx], forKey: "keyToDisplay")
