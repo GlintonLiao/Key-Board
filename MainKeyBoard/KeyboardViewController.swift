@@ -34,7 +34,6 @@ class KeyboardViewController: UIInputViewController {
     let heightConstraint: NSLayoutConstraint;
     // Add custom view sizing constraints here
     if isLandscapeView {
-      print("LandScape")
       heightConstraint = NSLayoutConstraint(
         item: view!,
         attribute: NSLayoutConstraint.Attribute.height,
@@ -45,7 +44,6 @@ class KeyboardViewController: UIInputViewController {
         constant: 280
       )
     } else {
-      print("Not LandScape")
       heightConstraint = NSLayoutConstraint(
         item: view!,
         attribute: NSLayoutConstraint.Attribute.height,
@@ -203,7 +201,6 @@ class KeyboardViewController: UIInputViewController {
     case "colon":
       commandState = .colon
       loadKeys()
-      print("colon")
 
     case "leftPa":
       commandState = .leftPa

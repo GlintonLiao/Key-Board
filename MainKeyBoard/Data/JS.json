@@ -4,19 +4,19 @@
 "foo",
 "func"
 ],
-"int": [
-"max",
-"min",
-"string"
+"const": [
+"var",
+"=",
+"()"
 ],
-"static": [
-"void",
-"int",
-"string"
+"()": [
+"=",
+"=>",
+"{"
 ],
 "(": [
-"int ",
-"string",
-")"
+"...",
+"[]",
+"parameters"
 ],
 }

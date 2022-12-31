@@ -19,4 +19,24 @@
 "string",
 ")"
 ],
+"#include": [
+"<algorithm>",
+"<iostream>",
+"<cstring>"
+],
+"=": [
+"min",
+"max",
+"abs"
+],
+"vector<int>": [
+"arr",
+"w(",
+"q"
+],
+"<": [
+"bool",
+"int",
+"string"
+],
 }

@@ -5,9 +5,9 @@
 "range("
 ],
 "int": [
-"max",
-"min",
-"string"
+"()",
+"input",
+"str"
 ],
 "static": [
 "void",
@@ -15,8 +15,18 @@
 "string"
 ],
 "(": [
-"int ",
-"string",
+"self",
+".",
 ")"
+],
+"def": [
+"__init__",
+"__eq__",
+"__repl__"
+],
+"__init__": [
+"()",
+":",
+"("
 ],
 }
