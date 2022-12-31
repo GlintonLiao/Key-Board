@@ -1,6 +1,6 @@
 # [Key: Board]
 
-A programmers' keyboard dedicated to code editing on mobile devices
+A programmers' keyboard dedicated to code editing on mobile devices.
 
 ## Feature
 
