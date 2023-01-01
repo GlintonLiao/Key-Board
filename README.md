@@ -34,13 +34,11 @@ Base on the "qwerty" layout, **[Key: Board]** added the number keys row, commonl
 
 ### Command Keys
 
-The leftmost key indicate the current language mode, by clicking it, you can jump to the main page of the app, and change the language mode.
-
-Besides, you can enter the specific symbol by clicking one of the four keys in the middle.
+You can enter the specific symbol by clicking one of the four keys in the middle, and select the specific key.
 
 <div style="display: flex; justify-content: center;">
   <img src="https://user-images.githubusercontent.com/37015336/210156795-d229d2a4-6a0e-4ec9-8400-cf4e9fede289.png" alt="layout" style="width: 300px" />
-  <img width="10" />
+  <img width="15" />
   <img src="https://user-images.githubusercontent.com/37015336/210157988-5e6b69bb-6474-4bbf-b1e9-e96f9381a1e8.png" alt="layout" style="width: 300px" />
 </div>
 
@@ -50,7 +48,7 @@ There is also an extra row for numbers and the corresponding symbols for input o
 
 <div style="display: flex; justify-content: center;">
   <img src="https://user-images.githubusercontent.com/37015336/210156795-d229d2a4-6a0e-4ec9-8400-cf4e9fede289.png" alt="layout" style="width: 300px" />
-  <img width="10" />
+  <img width="15" />
   <img src="https://user-images.githubusercontent.com/37015336/210158029-830d07e3-d149-49bd-abd8-3809ddd3c3f5.png" alt="layout" style="width: 300px" />
 </div>
 
@@ -58,8 +56,24 @@ When the keyboard is shifted, the symbols will be the default keys of the row, a
 
 ### Language mode and auto suggestions
 
-### Swipe Mode
+The leftmost key indicate the current language mode, by clicking it, you can jump to the main page of the app, and change the language mode.
+
+Different language mode will affect the results of auto suggestions.
+
+<div style="display: flex; justify-content: center;">
+  <img src="https://user-images.githubusercontent.com/37015336/210158240-01588f19-4f0c-4483-9075-b14e268fe605.png" alt="layout" style="width: 300px" />
+  <img width="15" />
+  <img src="https://user-images.githubusercontent.com/37015336/210158235-701361bf-c928-4573-b0b1-f9b80e5b3097.png" alt="layout" style="width: 300px" />
+</div>
 
 ## Download
 
-## Lincense
+You can download the app on App Store.
+
+<a href="https://apps.apple.com/us/app/">
+  <img src="https://user-images.githubusercontent.com/37015336/210157554-3b4d9ad1-57ed-40b0-b524-e594d912ad37.png" height="48" />
+</a>
+
+## License
+
+MIT
