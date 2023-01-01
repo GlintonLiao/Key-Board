@@ -76,4 +76,4 @@ You can download the app on App Store.
 
 ## License
 
-MIT
+GNU General Public License v3.0
