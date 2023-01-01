@@ -66,6 +66,12 @@ Different language mode will affect the results of auto suggestions.
   <img src="https://user-images.githubusercontent.com/37015336/210158235-701361bf-c928-4573-b0b1-f9b80e5b3097.png" alt="layout" style="width: 300px" />
 </div>
 
+### Swipe Mode
+
+In addition to clicking, you can also use swipe to enter numeric keys and symbol keys.
+
+For example, if you want to enter a left bracket(`(`), you can swipe the corresponding key to the lower left corner.
+
 ## Download
 
 You can download the app on App Store.
