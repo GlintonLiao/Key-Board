@@ -1,3 +1,4 @@
+<br>
 <div align="center">
   <a href="">
     <img src="https://user-images.githubusercontent.com/37015336/210157493-f5a18b21-59db-4031-9e19-b3fd16cbe92e.png" width="150" height="150"/>
@@ -14,6 +15,7 @@
   <img width="4" />
   <a href="https://github.com/glintonliao/Key-Board/release/">
     <img src="https://user-images.githubusercontent.com/37015336/210157397-c71b7dd4-8e15-45e9-99bb-9b17491c73e9.png" height="48" />
+  </a>
 </div>
 
 ## Intro
@@ -32,7 +34,27 @@ Base on the "qwerty" layout, **[Key: Board]** added the number keys row, commonl
 
 ### Command Keys
 
+The leftmost key indicate the current language mode, by clicking it, you can jump to the main page of the app, and change the language mode.
+
+Besides, you can enter the specific symbol by clicking one of the four keys in the middle.
+
+<div style="display: flex; justify-content: center;">
+  <img src="https://user-images.githubusercontent.com/37015336/210156795-d229d2a4-6a0e-4ec9-8400-cf4e9fede289.png" alt="layout" style="width: 300px" />
+  <img width="10" />
+  <img src="https://user-images.githubusercontent.com/37015336/210157988-5e6b69bb-6474-4bbf-b1e9-e96f9381a1e8.png" alt="layout" style="width: 300px" />
+</div>
+
 ### Number Keys
+
+There is also an extra row for numbers and the corresponding symbols for input on the top layer.
+
+<div style="display: flex; justify-content: center;">
+  <img src="https://user-images.githubusercontent.com/37015336/210156795-d229d2a4-6a0e-4ec9-8400-cf4e9fede289.png" alt="layout" style="width: 300px" />
+  <img width="10" />
+  <img src="https://user-images.githubusercontent.com/37015336/210158029-830d07e3-d149-49bd-abd8-3809ddd3c3f5.png" alt="layout" style="width: 300px" />
+</div>
+
+When the keyboard is shifted, the symbols will be the default keys of the row, and the tab key will be "reversed".
 
 ### Language mode and auto suggestions
 
